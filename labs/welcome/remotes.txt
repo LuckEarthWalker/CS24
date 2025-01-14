@@ -1,0 +1,5 @@
+origin  git@github.com:LuckEarthWalker/CS24.git (fetch)
+origin  git@github.com:LuckEarthWalker/CS24.git (push)
+upstream        https://github.com/ucsb-cs24/w25.git (fetch)
+upstream        https://github.com/ucsb-cs24/w25.git (push)
+
