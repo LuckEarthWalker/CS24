@@ -8,8 +8,8 @@ void rotate_cap(std::string &str, int rotate_num);
 int main(int argc, char* argv[]) {
 
     //error case
-    if (argc > 2) {
-        std::cout << "USAGE: caprot [rotation]\n";
+    if (argc != 2) {
+        std::cerr << "USAGE: caprot [rotation]\n";
         exit(1);
     }
 
@@ -32,13 +32,7 @@ void rotate_cap(std::string &str, int rotate_num) {
         }
     }
     for (int index : cap_indexes) {
-        if (index+rotate_num > strlen) {
-            str[index+rotate_num - strlen] = toupper(str[index+rotate_num - strlen]);
-        } else if (index+rotate_num < 0) {
-            str[strlen + index+rotate_num] = toupper(str[strlen + index+rotate_num]);
-        } else {
-            str[index+rotate_num] = toupper(str[index+rotate_num]);
-        }
+        str[((index + rotate_num) % strlen + strlen) % strlen] = toupper(str[((index + rotate_num) % strlen + strlen) % strlen]);
     }
     return;
 }
