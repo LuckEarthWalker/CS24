@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <vector>
+
+void rotate_cap(std::string &str, int rotate_num);
+
+int main(int argc, char* argv[]) {
+
+    //error case
+    if (argc > 2) {
+        std::cout << "USAGE: caprot [rotation]\n";
+        exit(1);
+    }
+
+    std::string input_line;
+    getline(std::cin, input_line);
+
+    int rot_num = std::atoi(argv[1]);
+    rotate_cap(input_line, rot_num);
+
+    std::cout << input_line << std::endl;
+}
+
+void rotate_cap(std::string &str, int rotate_num) {
+    int strlen = str.length();
+    std::vector<int> cap_indexes;
+    for (int i = 0; i < strlen; i++) {
+        if (isupper(str[i])) {
+            str[i] = tolower(str[i]);
+            cap_indexes.push_back(i);
+        }
+    }
+    for (int index : cap_indexes) {
+        if (index+rotate_num > strlen) {
+            str[index+rotate_num - strlen] = toupper(str[index+rotate_num - strlen]);
+        } else if (index+rotate_num < 0) {
+            str[strlen + index+rotate_num] = toupper(str[strlen + index+rotate_num]);
+        } else {
+            str[index+rotate_num] = toupper(str[index+rotate_num]);
+        }
+    }
+    return;
+}
