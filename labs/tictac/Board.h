@@ -7,9 +7,11 @@ class Board {
     public:
         Board();
         void enter_move(char player, int row, int col);
-        void checkgame();
+        bool checkgame();
+        std::string get_current_state();
     private:
         char player;
+        std::string current_state;
         int game_state[3][3] = {};
 };
 
