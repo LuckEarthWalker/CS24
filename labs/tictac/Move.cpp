@@ -6,12 +6,10 @@
 Move::Move(const std::string& input) {
 
     std::istringstream move_ln(input);
-    
-    move_ln >> std::ws;
 
     //check move number
     std::string buffer;
-    if (!(move_ln >> buffer) || buffer.empty()) {
+    if (!(move_ln >> buffer) || buffer.empty() || buffer.size() != 1) {
         throw ParseError("invalid number.");
     }
 

@@ -27,6 +27,10 @@ int main() {
             return 1;
         }
     }
+    if (game.get_current_state().empty()) {
+        std::cout << "Game in progress: New game.\n";
+        return 0;
+    }
     std::cout << game.get_current_state();
     return 0;
 }
