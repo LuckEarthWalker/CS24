@@ -11,7 +11,7 @@ Move::Move(const std::string& input) {
     int temp;
     move_ln >> temp;
     if (temp < 1 || temp > 9) {
-        throw ParseError("invalid move number.");
+        throw ParseError("Parse error.");
         exit(1);
     }
     number = temp;
@@ -20,7 +20,7 @@ Move::Move(const std::string& input) {
     std::string buffer;
     move_ln >> buffer;
     if (buffer.size() != 1 || (toupper(buffer[0]) != 'X' && toupper(buffer[0]) != 'O')) {
-        throw ParseError("invalid player code.");
+        throw ParseError("Parse error.");
         exit(1);
     }
     player = toupper(buffer[0]);
@@ -29,7 +29,7 @@ Move::Move(const std::string& input) {
     move_ln >> buffer;
     buffer[0] = toupper(buffer[0]);
     if (buffer.size() != 2 || (buffer[0] != 'A' && buffer[0] != 'B' && buffer[0] != 'C') || (buffer[1] != '1' && buffer[1] != '2' && buffer[1] != '3')) {
-        throw ParseError("invalid location.");
+        throw ParseError("Parse error.");
         exit(1);
     }
     row = buffer[0] - 64;
@@ -38,7 +38,7 @@ Move::Move(const std::string& input) {
     //check comment validity
     move_ln >> buffer;
     if (buffer[0] != '#') {
-        throw ParseError("invalid comment");
+        throw ParseError("Parse error.");
         exit(1);
     }
 }
