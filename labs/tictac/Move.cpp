@@ -33,7 +33,6 @@ Move::Move(const std::string& input) {
     move_ln >> buffer;
     buffer[0] = toupper(buffer[0]);
     if (buffer.size() != 2 || (buffer[0] != 'A' && buffer[0] != 'B' && buffer[0] != 'C') || (buffer[1] != '1' && buffer[1] != '2' && buffer[1] != '3')) {
-        std::cerr << "3\n";
         throw ParseError("invalid location.");
         exit(1);
     }
