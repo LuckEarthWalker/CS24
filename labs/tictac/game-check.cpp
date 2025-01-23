@@ -3,5 +3,6 @@
 #include "Move.h"
 
 int main() {
-
+    std::string str;
+    
 }
