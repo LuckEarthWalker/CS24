@@ -6,8 +6,10 @@
 class Board {
     public:
         Board();
+        void enter_move(char player, int row, int col);
+        
     private:
         char game_state[3][3];
-}
+};
 
 #endif
