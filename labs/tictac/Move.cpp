@@ -12,12 +12,10 @@ Move::Move(const std::string& input) {
     move_ln >> buffer;
     if (buffer.size() != 1) {
         throw ParseError("invalid number.");
-        exit(1);
     }
     int temp = stoi(buffer);
     if (!(temp >= 1 && temp <= 9)) {
         throw ParseError("invalid number.");
-        exit(1);
     }
     number = temp;
 
@@ -25,7 +23,6 @@ Move::Move(const std::string& input) {
     move_ln >> buffer;
     if (buffer.size() != 1 || (toupper(buffer[0]) != 'X' && toupper(buffer[0]) != 'O')) {
         throw ParseError("invalid player.");
-        exit(1);
     }
     player = toupper(buffer[0]);
 
@@ -34,7 +31,6 @@ Move::Move(const std::string& input) {
     buffer[0] = toupper(buffer[0]);
     if (buffer.size() != 2 || (buffer[0] != 'A' && buffer[0] != 'B' && buffer[0] != 'C') || (buffer[1] != '1' && buffer[1] != '2' && buffer[1] != '3')) {
         throw ParseError("invalid location.");
-        exit(1);
     }
     row = buffer[0] - 64;
     column = buffer[1] - '0';
@@ -44,7 +40,6 @@ Move::Move(const std::string& input) {
         move_ln >> buffer;
         if (buffer[0] != '#') {
             throw ParseError("Parse error.");
-            exit(1);
         }
     }
 }
