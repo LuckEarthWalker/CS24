@@ -9,7 +9,7 @@ class Board {
         void enter_move(char player, int row, int col);
         void checkgame();
     private:
-        char game_state[3][3];
+        int game_state[3][3];
 };
 
 #endif

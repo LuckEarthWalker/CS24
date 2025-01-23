@@ -41,7 +41,6 @@ Move::Move(const std::string& input) {
     column = buffer[1] - '0';
 
     //check comment validity
-    std::cout << move_ln.eof();
     if (!move_ln.eof() && !isspace(move_ln.peek())) {
         move_ln >> buffer;
         if (buffer[0] != '#') {
