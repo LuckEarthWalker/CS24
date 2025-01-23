@@ -7,8 +7,11 @@ Board::Board() {
 }
 
 void Board::enter_move(char player, int row, int col) {
+    row--;
+    col--;
     if (game_state[row][col] == 0) {
         game_state[row][col] = player;
+        this->player = player;
     } else {
         throw InvalidMove("invalid location");
     }

@@ -7,39 +7,51 @@ Move::Move(const std::string& input) {
 
     std::istringstream move_ln(input);
     
+    move_ln >> std::ws;
+
     //check move number
     std::string buffer;
-    move_ln >> buffer;
-    if (buffer.size() != 1) {
+    if (!(move_ln >> buffer) || buffer.empty()) {
         throw ParseError("invalid number.");
     }
+
     int temp = stoi(buffer);
-    if (!(temp >= 1 && temp <= 9)) {
+    if (temp < 1 || temp > 9 || std::to_string(temp) != buffer) {
         throw ParseError("invalid number.");
     }
     number = temp;
 
+    move_ln >> std::ws;
+
     //check player code
-    move_ln >> buffer;
-    if (buffer.size() != 1 || (toupper(buffer[0]) != 'X' && toupper(buffer[0]) != 'O')) {
+    if (!(move_ln >> buffer) || buffer.length() != 1) {
+        throw ParseError("invalid player.");
+    }
+    if ((toupper(buffer[0]) != 'X' && toupper(buffer[0]) != 'O')) {
         throw ParseError("invalid player.");
     }
     player = toupper(buffer[0]);
 
+    move_ln >> std::ws;
+
     //check square code
-    move_ln >> buffer;
+    if (!(move_ln >> buffer) || buffer.length() != 2) {
+        throw ParseError("invalid location.");
+    }
     buffer[0] = toupper(buffer[0]);
-    if (buffer.size() != 2 || (buffer[0] != 'A' && buffer[0] != 'B' && buffer[0] != 'C') || (buffer[1] != '1' && buffer[1] != '2' && buffer[1] != '3')) {
+    if ((buffer[0] != 'A' && buffer[0] != 'B' && buffer[0] != 'C') || 
+        (buffer[1] != '1' && buffer[1] != '2' && buffer[1] != '3')) {
         throw ParseError("invalid location.");
     }
     row = buffer[0] - 64;
     column = buffer[1] - '0';
 
+    move_ln >> std::ws;
+
     //check comment validity
-    if (!move_ln.eof() && !isspace(move_ln.peek())) {
-        move_ln >> buffer;
-        if (buffer[0] != '#') {
-            throw ParseError("Parse error.");
+    if (!move_ln.eof()) {
+        if (move_ln.peek() != '#') {
+            throw ParseError("invalid format.");
         }
     }
 }
