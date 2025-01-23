@@ -8,16 +8,20 @@ Move::Move(const std::string& input) {
     std::istringstream move_ln(input);
     
     //check move number
-    int temp;
-    move_ln >> temp;
-    if (temp < 1 || temp > 9) {
+    std::string buffer;
+    move_ln >> buffer;
+    if (buffer.size() != 1) {
+        throw ParseError("invalid number.");
+        exit(1);
+    }
+    int temp = stoi(buffer);
+    if (!(temp >= 1 && temp <= 9)) {
         throw ParseError("invalid number.");
         exit(1);
     }
     number = temp;
 
     //check player code
-    std::string buffer;
     move_ln >> buffer;
     if (buffer.size() != 1 || (toupper(buffer[0]) != 'X' && toupper(buffer[0]) != 'O')) {
         throw ParseError("invalid player.");
@@ -36,10 +40,12 @@ Move::Move(const std::string& input) {
     column = buffer[1] - '0';
 
     //check comment validity
-    move_ln >> buffer;
-    if (buffer[0] != '#' && !move_ln.eof()) {
-        throw ParseError("Parse error.");
-        exit(1);
+    if (!move_ln.eof()) {
+        move_ln >> buffer;
+        if (buffer[0] != '#') {
+            throw ParseError("Parse error.");
+            exit(1);
+        }
     }
 }
 
