@@ -15,6 +15,7 @@ class FibVec {
   void fib_next();
   void fib_before();
   void extend();
+  void retract();
 
 public:
   // Constructor and Destructor

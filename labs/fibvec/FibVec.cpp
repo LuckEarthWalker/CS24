@@ -33,7 +33,17 @@ void FibVec::extend() {
     fib_next();
     int* temp = vector;
     vector = new int[curr_size];
-    for (size_t i = 0; i < pre_size; i++) {
+    for (size_t i = 0; i < user_size; i++) {
+        vector[i] = temp[i];
+    }
+    delete[] temp;
+}
+
+void FibVec::retract() {
+    fib_before();
+    int* temp = vector;
+    vector = new int[curr_size];
+    for (size_t i = 0; i < user_size; i++) {
         vector[i] = temp[i];
     }
     delete[] temp;
@@ -77,6 +87,9 @@ int FibVec::pop() {
         throw std::underflow_error("no more values to pop");
     }
     user_size--;
+    if (user_size <= pre_size) {
+        retract();
+    }
     return vector[user_size];
 }
 
