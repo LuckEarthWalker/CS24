@@ -14,7 +14,7 @@ class FibVec {
   // Helper Functions
   void fib_next();
   void fib_before();
-  void extend();
+  void extend(size_t i);
   void retract();
 
 public:
