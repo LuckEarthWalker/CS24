@@ -47,7 +47,7 @@ size_t FibVec::count() const {
 }
 
 void FibVec::insert(int val, size_t i) {
-    if (i >= curr_size || i >= user_size) { // catch invalid index
+    if (i >= curr_size || i > user_size) { // catch invalid index
         throw std::out_of_range("invalid index for insert");
     }
     if (user_size+1 > curr_size) { // determine if resize needed
