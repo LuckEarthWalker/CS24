@@ -3,6 +3,7 @@
 // This provides exception types:
 #include <stdexcept>
 #include <cstddef>
+#include <iostream>
 
 // FibVec Function Implementations
 FibVec::FibVec() {
@@ -54,14 +55,21 @@ void FibVec::insert(int val, size_t i) {
         extend();
     }
 
-    for (size_t j = curr_size; j >= i; j--) {
-        vector[j+1] = vector[j];
+
+    if (user_size != 0) {
+        for (size_t j = user_size; j >= i+1; j--) {
+            vector[j] = vector[j-1];
+        }
     }
     vector[i] = val;
+    user_size++;
 }
 
 int FibVec::lookup(size_t i) const {
-    return 0;
+    if (i >= user_size) {
+        throw std::out_of_range("nonexistent index");
+    }
+    return vector[i];
 }
 
 int FibVec::pop() {
