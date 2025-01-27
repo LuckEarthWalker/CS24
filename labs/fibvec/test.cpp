@@ -11,12 +11,17 @@ int main() {
   int array[] = {1,2,3,4,8,7};  
     try {
         fibvec.insert(array[2], fibvec.count());
-        fibvec.insert(array[2], 1);
+        fibvec.insert(array[2], fibvec.count());
+        fibvec.insert(array[2], fibvec.count());
+        fibvec.insert(array[2], fibvec.count());
+        fibvec.insert(array[2], fibvec.count());
+        fibvec.insert(array[2], fibvec.count());
       } catch (const std::out_of_range& e) {
         std::cout << "invalid index\n";
         return 1;
       }
 
+  std::cout << fibvec.pop() << "\n";
   size_t size = fibvec.count();
   for (size_t i = 0; i < size; i++) {
     try {

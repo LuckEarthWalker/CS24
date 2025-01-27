@@ -73,6 +73,9 @@ int FibVec::lookup(size_t i) const {
 }
 
 int FibVec::pop() {
+    if (user_size == 0) {
+        throw std::underflow_error("no more values to pop");
+    }
     user_size--;
     return vector[user_size-1];
 }
