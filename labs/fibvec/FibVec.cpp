@@ -88,7 +88,7 @@ int FibVec::pop() {
     }
     user_size--;
     int pop_val = vector[user_size];
-    if (user_size <= pre_size) {
+    if (user_size < curr_size-pre_size) {
         retract();
     }
     return pop_val;
