@@ -67,6 +67,10 @@ void FibVec::insert(int val, size_t i) {
     }
     if (user_size+1 > curr_size) { // determine if resize needed
         extend(i);
+    } else {
+        for (size_t j = user_size; j >= i+1; j--) {
+            vector[j] = vector[j-1];
+        }
     }
 
     vector[i] = val;

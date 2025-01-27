@@ -9,16 +9,20 @@ int main() {
   FibVec fibvec;
 
   int array[] = {1,2,3,4,8,7};  
-    try {
-        fibvec.push(array[0]);
-        fibvec.push(array[1]);
-        fibvec.push(array[2]);
-      } catch (const std::out_of_range& e) {
-        std::cout << "invalid index\n";
-        return 1;
-      }
+  try {
+    fibvec.push(array[0]);
+    fibvec.push(array[1]);
+    fibvec.push(array[2]);
+    fibvec.push(array[3]);
+    fibvec.push(array[4]);
+    fibvec.push(array[5]);
+  } catch (const std::out_of_range& e) {
+    std::cout << "invalid index\n";
+    return 1;
+  }
 
-  std::cout << fibvec.pop() << "\n";
+  fibvec.insert(19, 0);
+
   size_t size = fibvec.count();
   for (size_t i = 0; i < size; i++) {
     try {
