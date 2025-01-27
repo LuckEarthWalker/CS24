@@ -81,6 +81,11 @@ int FibVec::pop() {
 }
 
 void FibVec::push(int val) {
+    if (user_size+1 > curr_size) { // determine if resize needed
+        extend();
+    }
+    vector[user_size] = val;
+    user_size++;
     return;
 }
 
