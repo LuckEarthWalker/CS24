@@ -28,7 +28,7 @@ public:
   int lookup(size_t i) const;
   int pop();
   void push(int val);
-  int remove(int val, size_t i);
+  int remove(size_t i);
 
 };
 

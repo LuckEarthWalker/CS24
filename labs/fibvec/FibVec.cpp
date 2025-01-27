@@ -72,6 +72,6 @@ void FibVec::push(int val) {
     return;
 }
 
-int FibVec::remove(int val, size_t i) {
+int FibVec::remove(size_t i) {
     return 0;
 }
