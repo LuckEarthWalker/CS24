@@ -10,10 +10,8 @@ int main() {
 
   int array[] = {1,2,3,4,8,7};  
     try {
-        fibvec.insert(array[2], 0);
-        fibvec.insert(array[2], 0);
-        fibvec.insert(array[2], 0);
-        fibvec.insert(array[2], 0);
+        fibvec.insert(array[2], fibvec.count());
+        fibvec.insert(array[2], 1);
       } catch (const std::out_of_range& e) {
         std::cout << "invalid index\n";
         return 1;
