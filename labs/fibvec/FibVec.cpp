@@ -113,6 +113,9 @@ int FibVec::remove(size_t i) {
     if (i > curr_size || i > user_size) { // catch invalid index
         throw std::out_of_range("invalid index for insert");
     }
+    if (user_size == 0) {
+        throw std::underflow_error("no more values to pop");
+    }
 
     int rm_val = vector[i];
     user_size--;
