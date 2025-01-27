@@ -77,7 +77,7 @@ int FibVec::pop() {
         throw std::underflow_error("no more values to pop");
     }
     user_size--;
-    return vector[user_size-1];
+    return vector[user_size];
 }
 
 void FibVec::push(int val) {
