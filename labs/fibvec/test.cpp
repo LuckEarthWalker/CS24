@@ -21,7 +21,7 @@ int main() {
     return 1;
   }
 
-  fibvec.insert(19, 0);
+  std::cout << fibvec.remove(5) <<" "<< fibvec.remove(0) <<" "<< fibvec.remove(2) <<" "<< fibvec.remove(0) <<"\n";
 
   size_t size = fibvec.count();
   for (size_t i = 0; i < size; i++) {

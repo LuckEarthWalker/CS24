@@ -43,12 +43,16 @@ void FibVec::extend(size_t i) {
     delete[] temp;
 }
 
-void FibVec::retract() {
+void FibVec::retract(size_t i) {
     fib_before();
     int* temp = vector;
     vector = new int[curr_size];
-    for (size_t i = 0; i < user_size; i++) {
-        vector[i] = temp[i];
+    for (size_t j = 0; j < user_size; j++) {
+        if (j < i) {
+            vector[j] = temp[j];
+        } else {
+            vector[j] = temp[j+1];
+        }
     }
     delete[] temp;
 }
@@ -91,7 +95,7 @@ int FibVec::pop() {
     user_size--;
     int pop_val = vector[user_size];
     if (user_size < curr_size-pre_size) {
-        retract();
+        retract(user_size);
     }
     return pop_val;
 }
@@ -106,5 +110,18 @@ void FibVec::push(int val) {
 }
 
 int FibVec::remove(size_t i) {
-    return 0;
+    if (i > curr_size || i > user_size) { // catch invalid index
+        throw std::out_of_range("invalid index for insert");
+    }
+
+    int rm_val = vector[i];
+    user_size--;
+    if (user_size < curr_size-pre_size) {
+        retract(i);
+    } else {
+        for (size_t j = i; j < user_size; j++) {
+            vector[j] = vector[j+1];
+        }
+    }
+    return rm_val;
 }
