@@ -73,7 +73,8 @@ int FibVec::lookup(size_t i) const {
 }
 
 int FibVec::pop() {
-    return 0;
+    user_size--;
+    return vector[user_size-1];
 }
 
 void FibVec::push(int val) {
