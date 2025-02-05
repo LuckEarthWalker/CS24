@@ -2,6 +2,8 @@
 #include <stdexcept>
 #include <iostream>
 
+const std::string str = "hello";
+
 List::List() {
     head = NULL;
 }
@@ -63,7 +65,6 @@ void List::insert(const std::string& value) {
 }
 
 const std::string& List::lookup(size_t index) const {
-    std::string str = "Hello";
     return str;
 }
 
