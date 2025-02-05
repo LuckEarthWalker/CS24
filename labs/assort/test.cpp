@@ -21,6 +21,6 @@ int main() {
   list.print();
   std::cout << list.count() << "\n";
 
-  std::cout << list.lookup(2) << "\n";
+  std::cout << list.lookup(0) << "\n";
   return 0;
 }
