@@ -72,7 +72,16 @@ void List::insert(const std::string& value) {
 }
 
 const std::string& List::lookup(size_t index) const {
-    return str;
+    if (index > this->count()-1) {
+        throw std::out_of_range("out of range index");
+    }
+    Node* temp = head;
+    size_t i = 0;
+    while (temp != NULL && i < index) {
+        temp = temp->next;
+        i++;
+    }
+    return temp->data;
 }
 
 void reverse_print(Node* current) {

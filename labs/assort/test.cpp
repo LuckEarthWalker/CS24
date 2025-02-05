@@ -11,15 +11,16 @@ int main() {
   list.insert("A");
   list.insert("B");
   list.insert("C");
-  list.insert("F");
+  list.insert("Fh");
   list.insert("D");
   list.insert("E");
   list.insert("F");
-  list.insert("B");
+  list.insert("Bo");
   list.insert("H");
 
   list.print();
-  list.print(true);
   std::cout << list.count() << "\n";
+
+  std::cout << list.lookup(2) << "\n";
   return 0;
 }
