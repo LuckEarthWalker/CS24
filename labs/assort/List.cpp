@@ -16,6 +16,9 @@ List::List(const List& other) {
         buffer->data = temp->data;
         buffer->next = NULL;
         head = buffer;
+    } else { // case of trying to copy empty list
+        head = NULL;
+        return;
     }
     while (temp->next != NULL) {
         buffer->next = new Node;
