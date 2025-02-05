@@ -63,7 +63,8 @@ void List::insert(const std::string& value) {
 }
 
 const std::string& List::lookup(size_t index) const {
-    return "hello";
+    std::string str = "Hello";
+    return str;
 }
 
 void List::print(bool reverse) const {
