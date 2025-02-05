@@ -19,8 +19,8 @@ int main() {
   list.insert("H");
 
   list.print();
-  std::cout << list.count() << "\n";
 
-  std::cout << list.lookup(0) << "\n";
+  List list2(list);
+  list2.print();
   return 0;
 }

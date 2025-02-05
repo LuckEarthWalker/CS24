@@ -9,8 +9,22 @@ List::List() {
 }
 
 List::List(const List& other) {
-    // size_t size = other.count();
-    // Node* temp = NULL;
+    Node* temp = other.head;
+
+    Node* buffer = new Node;
+    if(temp != NULL) {
+        buffer->data = temp->data;
+        buffer->next = NULL;
+        head = buffer;
+    }
+    while (temp->next != NULL) {
+        buffer->next = new Node;
+        buffer->next->data = temp->next->data;
+        buffer->next->next = NULL;
+
+        buffer = buffer->next;
+        temp = temp->next;
+    }
 }
 
 List::~List() {
