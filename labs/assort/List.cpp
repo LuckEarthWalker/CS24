@@ -20,6 +20,10 @@ List::~List() {
     head = NULL;
 }
 
+size_t List::count() const {
+    return 1;
+}
+
 void List::insert(const std::string& value) {
     Node* temp = head;
 
@@ -58,6 +62,10 @@ void List::insert(const std::string& value) {
     }
 }
 
+const std::string& List::lookup(size_t index) const {
+    return "hello";
+}
+
 void List::print(bool reverse) const {
     if (reverse) {
         return;
@@ -74,4 +82,12 @@ void List::print(bool reverse) const {
         }
         std::cout << "]\n";
     }
+}
+
+std::string List::remove(size_t index) {
+    return "Hello";
+}
+
+size_t List::remove(const std::string& value) {
+    return 1;
 }
