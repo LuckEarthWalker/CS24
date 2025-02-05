@@ -6,10 +6,27 @@
 
 int main() {
   List list;
-  list.insert("Hello");
-  list.insert("Aadvark");
-  
-  std::cout << "This program doesn't do anything interesting yet...\n";
 
+
+  list.insert("A");
+  list.print();
+  list.insert("B");
+  list.print();
+  list.insert("C");
+  list.print();
+  list.insert("F");
+  list.print();
+  list.insert("D");
+  list.print();
+  list.insert("E");
+  list.print();
+  list.insert("F");
+  list.print();
+  list.insert("B");
+
+  list.print();
+  
+  list.insert("H");
+  list.print();
   return 0;
 }

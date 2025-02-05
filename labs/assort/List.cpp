@@ -1,21 +1,21 @@
 #include "List.h"
 #include <stdexcept>
+#include <iostream>
 
 List::List() {
     head = NULL;
 }
 
 List::List(const List& other) {
-    size_t size = other.count();
-    Node* temp;
+    // size_t size = other.count();
+    // Node* temp = NULL;
 }
 
 List::~List() {
-    Node* next_node = head->next;
     while(head != NULL) {
+        Node* next_node = head->next;
         delete head;
         head = next_node;
-        next_node = next_node->next;
     }
     head = NULL;
 }
@@ -23,13 +23,13 @@ List::~List() {
 void List::insert(const std::string& value) {
     Node* temp = head;
 
-    if (temp->next == NULL) {
+    if (temp == NULL) { //List empty
         head = new Node;
         head->data = value;
         head->next = NULL;
         return;
     }
-    if (temp->next != NULL && temp->data > value) {
+    if (temp->data > value) { //if insert at front
         Node* buffer = new Node;
         buffer->next = head;
         buffer->data = value;
@@ -37,8 +37,8 @@ void List::insert(const std::string& value) {
         buffer = NULL;
         return;
     }
-    while (temp->next->next != NULL) {
-        if (temp->next->data < value) {
+    while (temp->next != NULL) {
+        if (temp->next->data > value) {
             Node* buffer = new Node;
             buffer->data = value;
             buffer->next = temp->next;
@@ -48,5 +48,30 @@ void List::insert(const std::string& value) {
         } else {
             temp = temp->next;
         }
+    }
+    if (temp->next == NULL) {// if at back
+        Node* buffer = new Node;
+        buffer->data = value;
+        buffer->next = NULL;
+        temp->next = buffer;
+        buffer = NULL;
+    }
+}
+
+void List::print(bool reverse) const {
+    if (reverse) {
+        return;
+    } else {
+        Node* temp = head;
+        std::cout << "[";
+        while (temp != NULL) {
+            if (temp->next == NULL) {//if last element
+                std::cout << temp->data;
+            } else {
+                std::cout << temp->data << ", ";
+            }
+            temp = temp->next;
+        }
+        std::cout << "]\n";
     }
 }
