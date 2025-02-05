@@ -11,8 +11,9 @@ List::List() {
 List::List(const List& other) {
     Node* temp = other.head;
 
-    Node* buffer = new Node;
+    Node* buffer = NULL;
     if(temp != NULL) {
+        buffer = new Node;
         buffer->data = temp->data;
         buffer->next = NULL;
         head = buffer;
