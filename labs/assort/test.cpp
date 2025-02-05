@@ -20,7 +20,7 @@ int main() {
 
   list.print();
 
-  List list2(list);
-  list2.print();
+  std::cout << list.remove(8) << "\n";
+  list.print();
   return 0;
 }

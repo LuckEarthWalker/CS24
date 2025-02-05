@@ -132,7 +132,33 @@ void List::print(bool reverse) const {
 }
 
 std::string List::remove(size_t index) {
-    return "Hello";
+    if (index > this->count()-1 || this->count() == 0) {
+        throw std::out_of_range("out of range index");
+    }
+
+    if (index == 0) {
+        std::string return_str = head->data;
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        temp = NULL;
+        return return_str;
+    }
+    Node* temp = head;
+
+    size_t i = 1;
+    while (temp->next != NULL && i < index) {
+        temp = temp->next;
+        i++;
+    }
+    Node* buffer = temp->next;
+    std::string return_str = buffer->data;
+    temp->next = temp->next->next;
+    delete buffer;
+    buffer = NULL;
+    temp = NULL;
+
+    return return_str;
 }
 
 size_t List::remove(const std::string& value) {
