@@ -9,24 +9,16 @@ int main() {
 
 
   list.insert("A");
-  list.print();
   list.insert("B");
-  list.print();
   list.insert("C");
-  list.print();
   list.insert("F");
-  list.print();
   list.insert("D");
-  list.print();
   list.insert("E");
-  list.print();
   list.insert("F");
-  list.print();
   list.insert("B");
+  list.insert("H");
 
   list.print();
-  
-  list.insert("H");
-  list.print();
+  list.print(true);
   return 0;
 }

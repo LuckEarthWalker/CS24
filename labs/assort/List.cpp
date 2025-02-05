@@ -68,9 +68,21 @@ const std::string& List::lookup(size_t index) const {
     return str;
 }
 
+void reverse_print(Node* current) {
+    if (current->next == NULL) {
+        std::cout << current->data << ", ";
+        return;
+    } else {
+        reverse_print(current->next);
+        std::cout << current->data << ", ";
+    }
+}
+
 void List::print(bool reverse) const {
     if (reverse) {
-        return;
+        std::cout << "[";
+        reverse_print(head->next);
+        std::cout << head->data << "]\n";
     } else {
         Node* temp = head;
         std::cout << "[";
