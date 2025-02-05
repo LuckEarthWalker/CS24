@@ -11,7 +11,7 @@ int main() {
   list.insert("A");
   list.insert("B");
   list.insert("C");
-  list.insert("Fh");
+  list.insert("F");
   list.insert("D");
   list.insert("E");
   list.insert("F");
@@ -20,7 +20,7 @@ int main() {
 
   list.print();
 
-  std::cout << list.remove(8) << "\n";
+  std::cout << list.remove("H") << "\n";
   list.print();
   return 0;
 }

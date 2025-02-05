@@ -162,5 +162,25 @@ std::string List::remove(size_t index) {
 }
 
 size_t List::remove(const std::string& value) {
-    return 1;
+    size_t num_rm = 0;
+    Node* temp = head;
+    if (temp == NULL) {
+        return num_rm;
+    }
+    if (temp->data == value && temp != NULL) {
+        head = head->next;
+        delete temp;
+        num_rm++;
+    }
+    while (temp->next != NULL) {
+        if (temp->next->data == value) {
+            Node* buffer = temp->next;
+            temp->next = temp->next->next;
+            delete buffer;
+            num_rm++;
+        } else {
+            temp = temp->next;
+        }
+    }
+    return num_rm;
 }
