@@ -20,5 +20,6 @@ int main() {
 
   list.print();
   list.print(true);
+  std::cout << list.count() << "\n";
   return 0;
 }

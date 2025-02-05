@@ -23,7 +23,14 @@ List::~List() {
 }
 
 size_t List::count() const {
-    return 1;
+    size_t size = 0;
+    Node* temp = head;
+    while (temp != NULL) {
+        size++;
+        temp = temp->next;
+    }
+    temp = NULL;
+    return size;
 }
 
 void List::insert(const std::string& value) {
