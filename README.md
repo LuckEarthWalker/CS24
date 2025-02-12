@@ -19,12 +19,14 @@ assignment, do that on [Gradescope][gradescope].
 
 _Assignments are due before midnight Pacific Time._
 
-| Name                    | Due
-|-------------------------|-----
-| [Welcome](labs/welcome) | January 14th
-| [TicTac](labs/tictac)   | January 22nd
-| [FibVec](labs/fibvec)   | January 28th
-| [Assort](labs/assort)   | February 4th
+| Name                      | Due
+|---------------------------|-----
+| [Welcome](labs/welcome)   | January  14th
+| [TicTac](labs/tictac)     | January  22nd
+| [FibVec](labs/fibvec)     | January  28th
+| [Assort](labs/assort)     | February  4th
+| [Swivel](labs/swivel)     | February 11th
+| [GenePool](labs/genepool) | February 18th
 
 
 ## Lectures
@@ -41,6 +43,11 @@ _11:00 to 12:15 Mondays and Wednesdays in TD-W 1701_
 | January  22nd | Exceptions; const member functions; vectors
 | January  27th | Big-O notation; _Quiz 1: Bring your ID and a pen/pencil!_
 | January  29th | More big-O notation; linked lists
+| February  3rd | Stacks and queues; amortized time
+| February  5th | Sorted sequences; sets; binary search; binary search trees
+| February 10th | Move constructors; self-balancing trees; AVL trees; splay trees
+| February 12th | Maps; tree traversals; abstract syntax trees; red-black trees
+| February 17th | _Presidents' Day: No lecture!_
 
 
 [piazza]: https://piazza.com/ucsb/winter2025/cs24
