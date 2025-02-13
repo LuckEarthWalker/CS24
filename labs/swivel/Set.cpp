@@ -52,6 +52,7 @@ size_t del_tree(Node* temp, int count) {
 size_t Set::clear() {
     size_t num_node = del_tree(mRoot, 0);
     mRoot = NULL;
+    mCount = 0;
     return num_node;
 }
 
