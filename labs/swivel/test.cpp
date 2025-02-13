@@ -8,11 +8,9 @@ int main() {
   Set set;
 
   std::cout << set.insert("A") << " " << set.insert("B") << " " << set.insert("Z") << " " << set.insert("S") << "\n";
-  set.print();
+  std::string str = "A";
+  std::cout << set.contains(str);
 
-  Set set2 = std::move(set);
-  set.print();
-  set2.print();
 
   return 0;
 }

@@ -6,7 +6,28 @@ Set::Set() {
     mCount = 0;
 }
 
-Set::Set(const Set& other) {}
+Node* copy_tree(const Node* other) {
+    if (other == NULL) {
+        return NULL;
+    } 
+
+    Node* temp = new Node;
+    temp->data = other->data;
+    temp->left = copy_tree(other->left);
+    temp->right = copy_tree(other->right);
+
+    return temp;
+}
+
+Set::Set(const Set& other) {
+    if (other.mRoot == NULL) {
+        mRoot = NULL;
+        mCount = 0;
+    } else {
+        mRoot = copy_tree(other.mRoot);
+        mCount = other.mCount;
+    }
+}
 
 Set::Set(Set&& other) {
     this->mRoot = other.mRoot;
@@ -60,7 +81,20 @@ size_t Set::clear() {
 }
 
 bool Set::contains(const std::string& value) const {
-    return true;
+    if (mRoot == NULL) {
+        return false;
+    }
+    Node* temp = mRoot;
+    while (temp != NULL) {
+        if (temp->data == value) {
+            return true;
+        } else if (value < temp->data) {
+            temp = temp->left;
+        } else {
+            temp = temp->right;
+        }
+    }
+    return false;
 }
 
 size_t Set::count() const {
