@@ -9,6 +9,7 @@ int main() {
 
   std::cout << set.insert("A") << " " << set.insert("B") << " " << set.insert("Z") << " " << set.insert("S") << "\n";
   set.print();
-
+  std::cout << set.clear() << "\n";
+  set.print();
   return 0;
 }

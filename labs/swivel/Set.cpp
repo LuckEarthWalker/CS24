@@ -10,10 +10,49 @@ Set::Set(const Set& other) {}
 
 Set::Set(Set&& other) {}
 
-Set::~Set() {}
+void del_tree(Node* temp) {
+    if (temp == NULL) {
+        return;
+    }
+    //delete left
+    if (temp->left != NULL) {
+        del_tree(temp->left);
+    }
+
+    // delete right
+    if (temp->right != NULL) {
+        del_tree(temp->right);
+    }
+    delete temp;
+    return;
+}
+
+Set::~Set() {
+    del_tree(mRoot);
+}
+
+size_t del_tree(Node* temp, int count) {
+    if (temp == NULL) {
+        return count;
+    }
+    //delete left
+    if (temp->left != NULL) {
+        count = del_tree(temp->left, count);
+    }
+
+    // delete right
+    if (temp->right != NULL) {
+        count = del_tree(temp->right, count);
+    }
+    delete temp;
+    count++;
+    return count;
+}
 
 size_t Set::clear() {
-    return 1;
+    size_t num_node = del_tree(mRoot, 0);
+    mRoot = NULL;
+    return num_node;
 }
 
 bool Set::contains(const std::string& value) const {
