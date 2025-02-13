@@ -9,7 +9,10 @@ int main() {
 
   std::cout << set.insert("A") << " " << set.insert("B") << " " << set.insert("Z") << " " << set.insert("S") << "\n";
   set.print();
-  std::cout << set.clear() << "\n";
+
+  Set set2 = std::move(set);
   set.print();
+  set2.print();
+
   return 0;
 }

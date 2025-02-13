@@ -8,7 +8,10 @@ Set::Set() {
 
 Set::Set(const Set& other) {}
 
-Set::Set(Set&& other) {}
+Set::Set(Set&& other) {
+    this->mRoot = other.mRoot;
+    other.mRoot = NULL;
+}
 
 void del_tree(Node* temp) {
     if (temp == NULL) {
