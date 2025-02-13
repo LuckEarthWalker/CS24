@@ -7,7 +7,8 @@
 int main() {
   Set set;
 
-  std::cout << "This program doesn't do anything interesting yet...\n";
+  std::cout << set.insert("A") << " " << set.insert("B") << " " << set.insert("Z") << " " << set.insert("S") << "\n";
+  set.print();
 
   return 0;
 }
