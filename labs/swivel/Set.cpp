@@ -31,7 +31,9 @@ Set::Set(const Set& other) {
 
 Set::Set(Set&& other) {
     this->mRoot = other.mRoot;
+    this->mCount = other.mCount;
     other.mRoot = NULL;
+    other.mCount = 0;
 }
 
 void del_tree(Node* temp) {
@@ -182,17 +184,18 @@ void Set::print() const {
 }
 
 static Node* get_parent(Node* root, Node* child) {
-    if (root == child)
+    if (root == child) {
         return NULL;
+    }
 
     Node* parent = NULL;
-    Node* current = root;
-    while (current != NULL && current != child) {
-        parent = current;
-        if (child->data < current->data)
-            current = current->left;
+    Node* curr = root;
+    while (curr != NULL && curr != child) {
+        parent = curr;
+        if (child->data < curr->data)
+            curr = curr->left;
         else
-            current = current->right;
+            curr = curr->right;
     }
     return parent;
 }
@@ -201,46 +204,46 @@ bool Set::swivel(const std::string& value) {
     if (mRoot == NULL)
         return false;
 
-    Node* current = mRoot;
+    Node* curr = mRoot;
     Node* last = mRoot;
 
-    while (current != NULL) {
-        last = current;
-        if (value == current->data)
+    while (curr != NULL) {
+        last = curr;
+        if (value == curr->data)
             break;
-        else if (value < current->data)
-            current = current->left;
+        else if (value < curr->data)
+            curr = curr->left;
         else
-            current = current->right;
+            curr = curr->right;
     }
 
-    if (current == NULL)
-        current = last;
-    bool found = (current->data == value);
+    if (curr == NULL)
+        curr = last;
+    bool found = (curr->data == value);
 
-    while (mRoot != current) {
-        Node* parent = get_parent(mRoot, current);
+    while (mRoot != curr) {
+        Node* parent = get_parent(mRoot, curr);
         if (parent == NULL)
             break;  
 
-        if (parent->left == current) {
+        if (parent->left == curr) {
             // Right rotation.
-            parent->left = current->right;
-            current->right = parent;
+            parent->left = curr->right;
+            curr->right = parent;
         } else {
             // Left rotation.
-            parent->right = current->left;
-            current->left = parent;
+            parent->right = curr->left;
+            curr->left = parent;
         }
 
         Node* grandparent = get_parent(mRoot, parent);
         if (grandparent == NULL)
-            mRoot = current;
+            mRoot = curr;
         else {
             if (grandparent->left == parent)
-                grandparent->left = current;
+                grandparent->left = curr;
             else
-                grandparent->right = current;
+                grandparent->right = curr;
         }
     }
     return found;
