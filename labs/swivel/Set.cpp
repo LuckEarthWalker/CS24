@@ -12,8 +12,20 @@ Set::Set(Set&& other) {}
 
 Set::~Set() {}
 
+size_t Set::clear() {
+    return 1;
+}
+
+bool Set::contains(const std::string& value) const {
+    return true;
+}
+
 size_t Set::count() const {
     return mCount;
+}
+
+void Set::debug() {
+    return;
 }
 
 size_t Set::insert(const std::string& value) {
@@ -90,4 +102,12 @@ void Set::print() const {
     }
     print_tree(mRoot);
     std::cout << "\n";
+}
+
+size_t Set::remove(const std::string& value) {
+    return 1;
+}
+
+bool Set::swivel(const std::string& value) {
+    return true;
 }
