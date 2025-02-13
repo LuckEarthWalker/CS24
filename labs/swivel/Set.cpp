@@ -93,11 +93,11 @@ void print_tree(Node* temp) {
 
 void Set::print() const {
     if (mRoot == NULL) {
-        std::cout << "(-)\n";
+        std::cout << "-\n";
         return;
     }
     if (mRoot->left == NULL && mRoot->right == NULL) {
-        std::cout << "(" << mRoot->data << ")\n";
+        std::cout << "" << mRoot->data << "\n";
         return;
     }
     print_tree(mRoot);
