@@ -14,7 +14,7 @@
 
 class GenePool {
   // Member Variables
-
+  std::map<std::string, Person*> genepool;
   // Helper Functions
 
 public:
