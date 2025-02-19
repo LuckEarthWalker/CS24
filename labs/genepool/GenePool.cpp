@@ -5,6 +5,9 @@
 GenePool::GenePool(std::istream& stream) {
     std::string curr_person;
     while(std::getline(stream, curr_person, '\n')) {
+        if (curr_person[0] == '#' || curr_person.length() == 0) {
+            continue;
+        }
         std::istringstream iss(curr_person);
         Person* temp = new Person;
 
@@ -26,7 +29,9 @@ GenePool::GenePool(std::istream& stream) {
                 temp->mother(nullptr);
             } else {
                 temp->mother(find(buffer));
-                find(buffer)->add_child(temp);
+                if (find(buffer) != nullptr) {
+                    find(buffer)->add_child(temp);
+                }
             }
         }
 
@@ -35,7 +40,9 @@ GenePool::GenePool(std::istream& stream) {
                 temp->father(nullptr);
             } else {
                 temp->father(find(buffer));
-                find(buffer)->add_child(temp);
+                if (find(buffer) != nullptr) {
+                    find(buffer)->add_child(temp);
+                }
             }
         }
         
