@@ -111,7 +111,6 @@ std::set<Person*> Person::granddaughters() {
 
 std::set<Person*> Person::grandfathers(PMod pmod) {
     std::set<Person*> temp = this->grandparents(pmod);
-    std::cout << "1";
     std::set<Person*> Grandfathers;
     for (Person* grandparent : temp) {
         if (grandparent->pgender == Gender::MALE) {
@@ -125,7 +124,7 @@ std::set<Person*> Person::grandmothers(PMod pmod) {
     std::set<Person*> temp = this->grandparents(pmod);
     std::set<Person*> Grandmothers;
     for (Person* grandparent : temp) {
-        if (grandparent->pgender == Gender::MALE) {
+        if (grandparent->pgender == Gender::FEMALE) {
             Grandmothers.insert(grandparent);
         }
     }
