@@ -57,14 +57,14 @@ void Person::get_full_sis(std::set<Person*>& sis, PMod pmod) {
 
     if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
         for (Person* sister : m_daughters) {
-            if (f_daughters.count(sister) != 0) {
+            if (f_daughters.count(sister) != 0 && sister != this) {
                 sis.insert(sister);
             }
         }
     }
     if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
         for (Person* sister : f_daughters) {
-            if (m_daughters.count(sister) != 0) {
+            if (m_daughters.count(sister) != 0 && sister != this) {
                 sis.insert(sister);
             }
         }
@@ -84,14 +84,14 @@ void Person::get_half_sis(std::set<Person*>& sis, PMod pmod) {
 
     if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
         for (Person* sister : m_daughters) {
-            if (f_daughters.count(sister) == 0) {
+            if (f_daughters.count(sister) == 0 && sister != this) {
                 sis.insert(sister);
             }
         }
     }
     if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
         for (Person* sister : f_daughters) {
-            if (m_daughters.count(sister) == 0) {
+            if (m_daughters.count(sister) == 0 && sister != this) {
                 sis.insert(sister);
             }
         }
