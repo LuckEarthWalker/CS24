@@ -217,6 +217,21 @@ std::set<Person*> Person::children() {
 }
 
 std::set<Person*> Person::cousins(PMod pmod, SMod smod) {
+    std::set<Person*> cousin;
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
+        std::set<Person*> m_siblings = this->pmother->siblings(PMod::ANY, smod);
+        for (Person* m_sibling : m_siblings) {
+            std::set<Person*> temp = m_sibling->children();
+            cousin.merge(temp);
+        }
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
+        std::set<Person*> f_siblings = this->pfather->siblings(PMod::ANY, smod);
+        for (Person* f_sibling : f_siblings) {
+            std::set<Person*> temp = f_sibling->children();
+            cousin.merge(temp);
+        }
+    }
     return stub;
 }
 
