@@ -6,9 +6,10 @@
 GenePool::GenePool(std::istream& stream) {
     std::string curr_person;
     while(std::getline(stream, curr_person)) {
-        if (curr_person[0] == '#' || curr_person.length() == 0) {
+        if (curr_person[0] == '#' || curr_person.length() < 3) {
             continue;
         }
+        std::cout << "'" << curr_person << "'\n";
         std::istringstream iss(curr_person);
         std::string name;
         std::string gender;
