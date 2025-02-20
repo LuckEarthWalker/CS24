@@ -10,40 +10,44 @@ GenePool::GenePool(std::istream& stream) {
             continue;
         }
         std::istringstream iss(curr_person);
-        std::string buffer;
+        std::string name;
+        std::string gender;
+        std::string mom;
+        std::string dad;
 
         Person* temp = new Person;
 
-        if (std::getline(iss, buffer, '\t')) { // get name
-            temp->name(buffer);
+        if (std::getline(iss, name, '\t')) { // get name
+            temp->name(name);
         }
 
-        if (std::getline(iss, buffer, '\t')) { // get gender
-            if (buffer == "male") {
+        if (std::getline(iss, gender, '\t')) { // get gender
+            if (gender == "male") {
                 temp->gender(Gender::MALE);
             } else {
                 temp->gender(Gender::FEMALE);
             }
         }
 
-        if (std::getline(iss, buffer, '\t')) { // get mother
-            if (buffer == "???") {
+        if (std::getline(iss, mom, '\t')) { // get mother
+            if (mom == "???") {
                 temp->mother(nullptr);
             } else {
-                temp->mother(find(buffer));
-                if (find(buffer) != nullptr) {
-                    find(buffer)->add_child(temp);
+                temp->mother(find(mom));
+                if (find(mom) != nullptr) {
+                    find(mom)->add_child(temp);
                 }
             }
         }
 
-        if (std::getline(iss, buffer)) { // get father
-            if (buffer == "???") {
+        if (std::getline(iss, dad, '\n')) { // get father
+            dad = dad.substr(0,dad.length()-1);
+            if (dad == "???") {
                 temp->father(nullptr);
             } else {
-                temp->father(find(buffer));
-                if (find(buffer) != nullptr) {
-                    find(buffer)->add_child(temp);
+                temp->father(find(dad));
+                if (find(dad) != nullptr) {
+                    find(dad)->add_child(temp);
                 }
             }
         }

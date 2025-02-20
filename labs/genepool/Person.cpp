@@ -1,4 +1,5 @@
 #include "Person.h"
+#include <iostream>
 
 // Person Member Functions
 Person::Person() {
@@ -109,20 +110,23 @@ std::set<Person*> Person::granddaughters() {
 }
 
 std::set<Person*> Person::grandfathers(PMod pmod) {
-    std::set<Person*> Grandfathers = this->grandparents(pmod);
-    for (Person* grandparent : Grandfathers) {
-        if (grandparent->pgender == Gender::FEMALE) {
-            Grandfathers.erase(grandparent);
+    std::set<Person*> temp = this->grandparents(pmod);
+    std::cout << "1";
+    std::set<Person*> Grandfathers;
+    for (Person* grandparent : temp) {
+        if (grandparent->pgender == Gender::MALE) {
+            Grandfathers.insert(grandparent);
         }
     }
     return Grandfathers;
 }
 
 std::set<Person*> Person::grandmothers(PMod pmod) {
-    std::set<Person*> Grandmothers = this->grandparents(pmod);
-    for (Person* grandparent : Grandmothers) {
+    std::set<Person*> temp = this->grandparents(pmod);
+    std::set<Person*> Grandmothers;
+    for (Person* grandparent : temp) {
         if (grandparent->pgender == Gender::MALE) {
-            Grandmothers.erase(grandparent);
+            Grandmothers.insert(grandparent);
         }
     }
     return Grandmothers;
@@ -130,19 +134,11 @@ std::set<Person*> Person::grandmothers(PMod pmod) {
 
 std::set<Person*> Person::grandparents(PMod pmod) {
     std::set<Person*> Grandparents;
-    if (pmod == PMod::ANY) {
-        if (this->pmother != nullptr) {
-            std::set<Person*> temp = this->pmother->parents();
-            Grandparents.merge(temp);
-        }
-        if (this->pfather != nullptr) {
-            std::set<Person*> temp = this->pfather->parents();
-            Grandparents.merge(temp);
-        }
-    } else if (pmod == PMod::MATERNAL && this->pmother != nullptr) {
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
         std::set<Person*> temp = this->pmother->parents();
         Grandparents.merge(temp);
-    } else if (this->pfather != nullptr) {
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
         std::set<Person*> temp = this->pfather->parents();
         Grandparents.merge(temp);
     }
@@ -168,16 +164,10 @@ std::set<Person*> Person::nieces(PMod pmod, SMod smod) {
 
 std::set<Person*> Person::parents(PMod pmod) {
     std::set<Person*> Parents;
-    if (pmod == PMod::ANY) {
-        if (this->pmother != nullptr) {
-            Parents.insert(this->pmother);
-        }
-        if (this->pfather != nullptr) {
-            Parents.insert(this->pfather);
-        }
-    } else if (pmod == PMod::MATERNAL && this->pmother != nullptr) {
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
         Parents.insert(this->pmother);
-    } else if (this->pfather != nullptr) {
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
         Parents.insert(this->pfather);
     }
     return Parents;
