@@ -1,17 +1,19 @@
 #include "GenePool.h"
 #include <sstream>
+#include <iostream>
 
 // GenePool Member Functions
 GenePool::GenePool(std::istream& stream) {
     std::string curr_person;
-    while(std::getline(stream, curr_person, '\n')) {
+    while(std::getline(stream, curr_person)) {
         if (curr_person[0] == '#' || curr_person.length() == 0) {
             continue;
         }
         std::istringstream iss(curr_person);
+        std::string buffer;
+
         Person* temp = new Person;
 
-        std::string buffer;
         if (std::getline(iss, buffer, '\t')) { // get name
             temp->name(buffer);
         }
@@ -35,7 +37,7 @@ GenePool::GenePool(std::istream& stream) {
             }
         }
 
-        if (std::getline(iss, buffer, '\t')) { // get father
+        if (std::getline(iss, buffer)) { // get father
             if (buffer == "???") {
                 temp->father(nullptr);
             } else {
