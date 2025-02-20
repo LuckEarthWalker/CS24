@@ -101,12 +101,75 @@ void Person::get_half_sis(std::set<Person*>& sis, PMod pmod) {
 std::set<Person*> Person::sisters(PMod pmod, SMod smod) {
     std::set<Person*> sis;
     if (smod == SMod::HALF || smod == SMod::ANY) {
-        get_half_sis(sis, pmod);
+        this->get_half_sis(sis, pmod);
     }
     if (smod == SMod::FULL || smod == SMod::ANY) {
-        get_full_sis(sis, pmod);
+        this->get_full_sis(sis, pmod);
     }
     return sis;
+}
+
+void Person::get_half_bro(std::set<Person*>& bro, PMod pmod) {
+    std::set<Person*> f_sons;
+    std::set<Person*> m_sons;
+    if (this->pmother != nullptr) {
+        m_sons = this->pmother->sons();
+    }
+    if (this->pfather != nullptr) {
+        f_sons = this->pfather->sons();
+    }
+
+    if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
+        for (Person* brother : m_sons) {
+            if (f_sons.count(brother) == 0 && brother != this) {
+                bro.insert(brother);
+            }
+        }
+    }
+    if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
+        for (Person* brother : f_sons) {
+            if (m_sons.count(brother) == 0 && brother != this) {
+                bro.insert(brother);
+            }
+        }
+    }
+}
+
+void Person::get_full_bro(std::set<Person*>& bro, PMod pmod) {
+    std::set<Person*> f_sons;
+    std::set<Person*> m_sons;
+    if (this->pmother != nullptr) {
+        m_sons = this->pmother->sons();
+    }
+    if (this->pfather != nullptr) {
+        f_sons = this->pfather->sons();
+    }
+
+    if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
+        for (Person* brother : m_sons) {
+            if (f_sons.count(brother) != 0 && brother != this) {
+                bro.insert(brother);
+            }
+        }
+    }
+    if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
+        for (Person* brother : f_sons) {
+            if (m_sons.count(brother) != 0 && brother != this) {
+                bro.insert(brother);
+            }
+        }
+    }
+}
+
+std::set<Person*> Person::brothers(PMod pmod, SMod smod) {
+    std::set<Person*> bro;
+    if (smod == SMod::HALF || smod == SMod::ANY) {
+        this->get_half_bro(bro, pmod);
+    }
+    if (smod == SMod::FULL || smod == SMod::ANY) {
+        this->get_full_bro(bro, pmod);
+    }
+    return bro;
 }
 
 void Person::get_parents(std::set<Person*>& Ancesters) {
@@ -137,10 +200,6 @@ std::set<Person*> Person::ancestors(PMod pmod) {
 }
 
 std::set<Person*> Person::aunts(PMod pmod, SMod smod) {
-    return stub;
-}
-
-std::set<Person*> Person::brothers(PMod pmod, SMod smod) {
     return stub;
 }
 

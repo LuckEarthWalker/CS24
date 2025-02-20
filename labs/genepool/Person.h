@@ -24,6 +24,10 @@ class Person {
 
   void get_half_sis(std::set<Person*>& sis, PMod pmod);
   void get_full_sis(std::set<Person*>& sis, PMod pmod);
+
+  void get_half_bro(std::set<Person*>& bro, PMod pmod);
+  void get_full_bro(std::set<Person*>& bro, PMod pmod);
+  
 public:
   // Constructor
   Person();
