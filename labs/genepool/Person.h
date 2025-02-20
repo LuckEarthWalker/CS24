@@ -21,6 +21,9 @@ class Person {
   // Helper Functions
   void get_childern(std::set<Person*>& Descendants);
   void get_parents(std::set<Person*>& Ancesters);
+
+  void get_half_sis(std::set<Person*>& sis, PMod pmod);
+  void get_full_sis(std::set<Person*>& sis, PMod pmod);
 public:
   // Constructor
   Person();

@@ -45,6 +45,70 @@ Person* Person::father() {
 //for stubbing
 std::set<Person*> stub = {nullptr};
 
+void Person::get_full_sis(std::set<Person*>& sis, PMod pmod) {
+    std::set<Person*> f_daughters;
+    std::set<Person*> m_daughters;
+    if (this->pmother != nullptr) {
+        m_daughters = this->pmother->daughters();
+    }
+    if (this->pfather != nullptr) {
+        f_daughters = this->pfather->daughters();
+    }
+
+    if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
+        for (Person* sister : m_daughters) {
+            if (f_daughters.count(sister) != 0) {
+                sis.insert(sister);
+            }
+        }
+    }
+    if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
+        for (Person* sister : f_daughters) {
+            if (m_daughters.count(sister) != 0) {
+                sis.insert(sister);
+            }
+        }
+    }
+
+}
+
+void Person::get_half_sis(std::set<Person*>& sis, PMod pmod) {
+    std::set<Person*> f_daughters;
+    std::set<Person*> m_daughters;
+    if (this->pmother != nullptr) {
+        m_daughters = this->pmother->daughters();
+    }
+    if (this->pfather != nullptr) {
+        f_daughters = this->pfather->daughters();
+    }
+
+    if (pmod == PMod::MATERNAL || pmod == PMod::ANY) {
+        for (Person* sister : m_daughters) {
+            if (f_daughters.count(sister) == 0) {
+                sis.insert(sister);
+            }
+        }
+    }
+    if (pmod == PMod::PATERNAL || pmod == PMod::ANY) {
+        for (Person* sister : f_daughters) {
+            if (m_daughters.count(sister) == 0) {
+                sis.insert(sister);
+            }
+        }
+    }
+}
+
+std::set<Person*> Person::sisters(PMod pmod, SMod smod) {
+    std::set<Person*> sis;
+    if (smod == SMod::HALF || smod == SMod::ANY) {
+        get_half_sis(sis, pmod);
+    }
+    if (smod == SMod::FULL || smod == SMod::ANY) {
+        get_full_sis(sis, pmod);
+    }
+    return sis;
+}
+
 void Person::get_parents(std::set<Person*>& Ancesters) {
     if (this->pmother == nullptr && this->pfather == nullptr) {
         return;
@@ -197,12 +261,6 @@ std::set<Person*> Person::parents(PMod pmod) {
 
 std::set<Person*> Person::siblings(PMod pmod, SMod smod) {
     return stub;
-}
-
-std::set<Person*> Person::sisters(PMod pmod, SMod smod) {
-    std::set<Person*> sis;
-
-    return sis;
 }
 
 std::set<Person*> Person::sons() {
