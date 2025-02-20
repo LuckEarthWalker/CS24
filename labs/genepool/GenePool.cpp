@@ -40,7 +40,7 @@ GenePool::GenePool(std::istream& stream) {
             }
         }
 
-        if (std::getline(iss, dad, '\n')) { // get father
+        if (std::getline(iss, dad)) { // get father
             dad = dad.substr(0,dad.length()-1);
             if (dad == "???") {
                 temp->father(nullptr);

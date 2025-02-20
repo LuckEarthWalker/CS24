@@ -178,7 +178,9 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod) {
 }
 
 std::set<Person*> Person::sisters(PMod pmod, SMod smod) {
-    return stub;
+    std::set<Person*> sis;
+
+    return sis;
 }
 
 std::set<Person*> Person::sons() {
