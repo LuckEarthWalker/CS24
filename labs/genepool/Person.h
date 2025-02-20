@@ -20,6 +20,7 @@ class Person {
   std::set<Person*> pchildren;
   // Helper Functions
   void get_childern(std::set<Person*>& Descendants);
+  void get_parents(std::set<Person*>& Ancesters);
 public:
   // Constructor
   Person();
