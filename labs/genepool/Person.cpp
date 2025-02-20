@@ -200,7 +200,16 @@ std::set<Person*> Person::ancestors(PMod pmod) {
 }
 
 std::set<Person*> Person::aunts(PMod pmod, SMod smod) {
-    return stub;
+    std::set<Person*> aunt;
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
+        std::set<Person*> temp = this->pmother->sisters(PMod::ANY, smod);
+        aunt.merge(temp);
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
+        std::set<Person*> temp = this->pfather->sisters(PMod::ANY, smod);
+        aunt.merge(temp);
+    }
+    return aunt;
 }
 
 std::set<Person*> Person::children() {
