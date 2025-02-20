@@ -61,7 +61,14 @@ void Person::get_parents(std::set<Person*>& Ancesters) {
 
 std::set<Person*> Person::ancestors(PMod pmod) {
     std::set<Person*> Ancestors;
-    get_parents(Ancestors);
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
+        Ancestors.insert(this->pmother);
+        this->pmother->get_parents(Ancestors);
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
+        Ancestors.insert(this->pfather);
+        this->pfather->get_parents(Ancestors);
+    }
     return Ancestors;
 }
 
