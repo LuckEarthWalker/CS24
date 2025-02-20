@@ -42,9 +42,6 @@ Person* Person::father() {
     return this->pfather;
 }
 
-//for stubbing
-std::set<Person*> stub = {nullptr};
-
 void Person::get_full_sis(std::set<Person*>& sis, PMod pmod) {
     std::set<Person*> f_daughters;
     std::set<Person*> m_daughters;
@@ -232,7 +229,7 @@ std::set<Person*> Person::cousins(PMod pmod, SMod smod) {
             cousin.merge(temp);
         }
     }
-    return stub;
+    return cousin;
 }
 
 std::set<Person*> Person::daughters() {
