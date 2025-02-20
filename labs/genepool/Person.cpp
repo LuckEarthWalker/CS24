@@ -345,5 +345,14 @@ std::set<Person*> Person::sons() {
 }
     
 std::set<Person*> Person::uncles(PMod pmod, SMod smod) {
-    return stub;
+    std::set<Person*> uncle;
+    if ((pmod == PMod::MATERNAL || pmod == PMod::ANY) && this->pmother != nullptr) {
+        std::set<Person*> temp = this->pmother->brothers(PMod::ANY, smod);
+        uncle.merge(temp);
+    }
+    if ((pmod == PMod::PATERNAL || pmod == PMod::ANY) && this->pfather != nullptr) {
+        std::set<Person*> temp = this->pfather->brothers(PMod::ANY, smod);
+        uncle.merge(temp);
+    }
+    return uncle;
 }
