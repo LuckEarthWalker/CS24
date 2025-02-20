@@ -45,8 +45,24 @@ Person* Person::father() {
 //for stubbing
 std::set<Person*> stub = {nullptr};
 
+void Person::get_parents(std::set<Person*>& Ancesters) {
+    if (this->pmother == nullptr && this->pfather == nullptr) {
+        return;
+    } 
+    if (this->pmother != nullptr) {
+        this->pmother->get_parents(Ancesters);
+    }
+    if (this->pfather != nullptr) {
+        this->pfather->get_parents(Ancesters);
+    }
+    std::set<Person*> temp = this->parents();
+    Ancesters.merge(temp);
+}
+
 std::set<Person*> Person::ancestors(PMod pmod) {
-    return stub;
+    std::set<Person*> Ancestors;
+    get_parents(Ancestors);
+    return Ancestors;
 }
 
 std::set<Person*> Person::aunts(PMod pmod, SMod smod) {
