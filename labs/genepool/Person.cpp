@@ -309,7 +309,13 @@ std::set<Person*> Person::grandsons() {
 }
 
 std::set<Person*> Person::nephews(PMod pmod, SMod smod) {
-    return stub;
+    std::set<Person*> nephew;
+    std::set<Person*> sibling = this->siblings(pmod, smod);
+    for (Person* sib : sibling) {
+        std::set<Person*> temp = sib->sons();
+        nephew.merge(temp);
+    }
+    return nephew;
 }
 
 std::set<Person*> Person::nieces(PMod pmod, SMod smod) {
