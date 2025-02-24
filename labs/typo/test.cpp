@@ -7,7 +7,14 @@
 int main() {
     Heap heap(8);
 
-    std::cout << "This program doesn't do anything interesting yet...\n";
+    heap.push("gold", 1);
+    heap.push("iron", 5);
+    heap.push("silver", 2);
+    heap.push("andisite", 11);
 
+    while (heap.count() > 0) {
+        std::cout << "[" << heap.pop().value << "] ";
+    }
+    std::cout << "\n";
     return 0;
 }
