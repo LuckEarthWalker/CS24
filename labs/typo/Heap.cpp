@@ -61,8 +61,8 @@ Heap::Entry Heap::pop() {
     Heap::Entry least_child;
     size_t lc_pos;
     if (node_pos*2+1 < mCount && node_pos*2+2 < mCount) {
-        least_child = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
-        lc_pos = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
+        least_child = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
+        lc_pos = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
     } else if (node_pos*2+1 < mCount) { //based on min heap structure, if missing a child, then remaining must be left child
         least_child = mData[node_pos*2+1];
         lc_pos = node_pos*2+1;
@@ -79,8 +79,8 @@ Heap::Entry Heap::pop() {
         //update node positions and least child
         node_pos = lc_pos;
         if (node_pos*2+1 < mCount && node_pos*2+2 < mCount) {
-            least_child = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
-            lc_pos = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
+            least_child = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
+            lc_pos = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
         } else if (node_pos*2+1 < mCount) { //based on min heap structure, if missing a child, then remaining must be left child
             least_child = mData[node_pos*2+1];
             lc_pos = node_pos*2+1;
@@ -117,8 +117,8 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
     Heap::Entry least_child;
     size_t lc_pos;
     if (node_pos*2+1 < mCount && node_pos*2+2 < mCount) {
-        least_child = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
-        lc_pos = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
+        least_child = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
+        lc_pos = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
     } else if (node_pos*2+1 < mCount) { //based on min heap structure, if missing a child, then remaining must be left child
         least_child = mData[node_pos*2+1];
         lc_pos = node_pos*2+1;
@@ -134,8 +134,8 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
         //update node positions and least child
         node_pos = lc_pos;
         if (node_pos*2+1 < mCount && node_pos*2+2 < mCount) {
-            least_child = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
-            lc_pos = (mData[node_pos*2+1].score < mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
+            least_child = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? mData[node_pos*2+1] : mData[node_pos*2+2];
+            lc_pos = (mData[node_pos*2+1].score <= mData[node_pos*2+2].score) ? node_pos*2+1 : node_pos*2+2;
         } else if (node_pos*2+1 < mCount) { //based on min heap structure, if missing a child, then remaining must be left child
             least_child = mData[node_pos*2+1];
             lc_pos = node_pos*2+1;
