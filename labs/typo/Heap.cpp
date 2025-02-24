@@ -1,4 +1,5 @@
 #include "Heap.h"
+#include <stdexcept>
 
 Heap::Heap(size_t capacity) {
     mData = new Entry[capacity];
