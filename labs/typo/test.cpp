@@ -9,7 +9,7 @@ int main() {
 
     heap.push("gold", 1);
     heap.push("iron", 5);
-    heap.push("silver", 2);
+    heap.push("silver", -2);
     heap.pushpop("andisite", 11);
 
     while (heap.count() > 0) {

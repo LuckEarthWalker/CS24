@@ -56,7 +56,6 @@ Heap::Entry Heap::pop() {
     Heap::Entry temp = mData[0];
     //move leftmost node to top
     mData[0] = mData[mCount-1];
-    mCount -= 1;
     //start node swapping
     size_t node_pos = 0;
     Heap::Entry least_child;
@@ -68,6 +67,7 @@ Heap::Entry Heap::pop() {
         least_child = mData[node_pos*2+1];
         lc_pos = node_pos*2+1;
     } else {
+        mCount--;
         return temp;
     }
     while (mData[node_pos].score > least_child.score) {
@@ -86,6 +86,7 @@ Heap::Entry Heap::pop() {
             lc_pos = node_pos*2+1;
         } else {break;}
     }
+    mCount--;
     return temp;
 }
 
@@ -151,5 +152,8 @@ void Heap::push(const std::string& value, float score) {
 }
 
 const Heap::Entry& Heap::top() const {
+    if (mCount == 0) {
+        throw std::underflow_error("empty heap, nothing to pop");
+    }
     return this->mData[0];
 }
