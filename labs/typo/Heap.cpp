@@ -156,6 +156,9 @@ void Heap::push(const std::string& value, float score) {
 
     //swap nodes
     while (node_pos > 0 && mData[node_pos].score < mData[(node_pos-1)/2].score) {
+        if (mData[node_pos].score == mData[(node_pos-1)/2].score) {
+            break;
+        }
         Heap::Entry buffer = mData[node_pos];
         mData[node_pos] = mData[(node_pos-1)/2];
         mData[(node_pos-1)/2] = buffer;

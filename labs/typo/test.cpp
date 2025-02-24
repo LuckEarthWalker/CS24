@@ -6,11 +6,12 @@
 
 int main() {
     Heap heap(8);
-
-    heap.push("iron", 5);
-    heap.push("silver", 2);
-    heap.push("gold", 1);
-    heap.push("andisite", -11);
+    //(kings 3) (bears 3) (apostles 12) (pillars 5) (animals 12)
+    heap.push("kings", 3);
+    heap.push("bears", 3);
+    heap.push("animals", 12);
+    heap.push("apostles", 12);
+    heap.push("pillars", 5);
 
     for (size_t i = 0; i < heap.count(); i++) {
         std::cout << "[" << heap.lookup(i).value << "] ";
