@@ -98,6 +98,20 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
     //move leftmost node to top
     mData[0].value = value;
     mData[0].score = score;
+
+    if (mCount == 1) {
+        return temp;
+    }
+    //check if new node is smallest
+    if (mData[0].score < mData[1].score) {
+        if (mCount > 2) {
+            if (mData[0].score < mData[2].score) {
+                return temp;
+            }
+        } else {
+            return temp;
+        }
+    } 
     //start node swapping
     size_t node_pos = 0;
     Heap::Entry least_child;
@@ -141,7 +155,7 @@ void Heap::push(const std::string& value, float score) {
     mCount++;
 
     //swap nodes
-    while (mData[node_pos].score < mData[(node_pos-1)/2].score) {
+    while (node_pos > 0 && mData[node_pos].score < mData[(node_pos-1)/2].score) {
         Heap::Entry buffer = mData[node_pos];
         mData[node_pos] = mData[(node_pos-1)/2];
         mData[(node_pos-1)/2] = buffer;
