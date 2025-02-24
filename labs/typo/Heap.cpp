@@ -27,7 +27,7 @@ Heap::Heap(Heap&& other) {
 }
 
 Heap::~Heap() {
-    delete mData;
+    delete []mData;
     mData = nullptr;
 }
 
