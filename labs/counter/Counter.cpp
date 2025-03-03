@@ -23,11 +23,19 @@ int Counter::total() const {
 
 void Counter::inc(const std::string& key, int by) {
     Node* temp = pairs.find(key);
+    if (temp == nullptr) {
+        pairs.push_back(key, by);
+        return;
+    }
     temp->num += by;
 }
 
 void Counter::dec(const std::string& key, int by) {
     Node* temp = pairs.find(key);
+    if (temp == nullptr) {
+        pairs.push_back(key, -1*by);
+        return;
+    }
     temp->num -= by;
 }
 
@@ -36,11 +44,19 @@ void Counter::del(const std::string& key) {
 }
 
 int Counter::get(const std::string& key) const {
-    return pairs.find(key)->num;
+    Node* temp = pairs.find(key);
+    if (temp == nullptr) {
+        return 0;
+    }
+    return temp->num;
 }
 
 void Counter::set(const std::string& key, int count) {
     Node* temp = pairs.find(key);
+    if (temp == nullptr) {
+        pairs.push_back(key, count);
+        return;
+    }
     temp->num = count;
 }
 

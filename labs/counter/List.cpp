@@ -47,10 +47,28 @@ Node* List::find(const std::string& str_val) const {
 
 void List::remove(const std::string& str_val) {
     Node* temp = find(str_val);
-    temp->before->next = temp->next;
-    temp->next->before = temp->before;
-    delete temp;
-    temp = nullptr;
+    if (temp == nullptr) {
+        return;
+    }
+    if (temp->before == nullptr) {
+        head = temp->next;
+        if (head != nullptr){
+            temp->next->before = nullptr;
+        }
+        delete temp;
+        temp = nullptr;
+    } else if (temp->next == nullptr) {
+        tail = temp->before;
+        temp->before->next = nullptr;
+        delete temp;
+        temp = nullptr;
+    } else {
+        temp->before->next = temp->next;
+        temp->next->before = temp->before;
+        delete temp;
+        temp = nullptr;
+    }
+    size--;
 }
 
 size_t List::count() const {
