@@ -1,6 +1,8 @@
 #ifndef COUNTER_H
 #define COUNTER_H
 
+#include "List.h"
+
 #include <cstddef>
 #include <string>
 
@@ -10,9 +12,11 @@
 class Counter {
 public:
   class Iterator {
-    // Member Variables
+    Node* it;
 
   public:
+    Iterator(Node* head);
+
     const std::string& key() const;
     int value() const;
 
@@ -22,7 +26,7 @@ public:
   };
 
 private:
-  // Member Variables
+  List pairs;
 
 private:
   // Helper Functions
