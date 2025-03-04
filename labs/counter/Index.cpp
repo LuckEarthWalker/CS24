@@ -17,7 +17,7 @@ void Index::rehash() {
     size_t previous_msize = map_size;
     map_size = map_size << 1;
     for (size_t i = 0; i < previous_msize; i++) {
-        if (counter > count) {
+        if (counter > previous_msize) {
             break;
         }
         if (temp[i] != nullptr) {
