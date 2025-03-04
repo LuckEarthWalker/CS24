@@ -27,6 +27,7 @@ public:
     ~Index();
 
     void new_key(const std::string& key, Node* pair);
+    Node* del_key(const std::string& key);
     Node* lookup(const std::string& key) const;
 };
 

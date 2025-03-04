@@ -44,6 +44,7 @@ void Index::add_key(const std::string& key, Node* pair) {
         offset++;
     }
     map[buffer] = pair;
+    count++;
 }
 
 void Index::new_key(const std::string& key, Node* pair) {
@@ -67,4 +68,22 @@ Node* Index::lookup(const std::string& key) const {
         return map[buffer];
     }
     return nullptr;
+}
+
+Node* Index::del_key(const std::string& key) {
+    size_t index = hashfunc(key);
+    size_t offset = 1;
+    size_t buffer = index;
+    while (map[buffer] != nullptr && map[buffer]->str != key) {
+        buffer = index;
+        buffer = (size_t)(index + .5*(offset + pow(offset, 2)))%map_size;
+        offset++;
+    }
+
+    if (map[buffer] != nullptr) {
+        Node* temp = map[buffer];
+        map[buffer] = nullptr;
+        return temp;
+    }
+    return nullptr;    
 }
