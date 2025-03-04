@@ -1,11 +1,19 @@
 #include "Index.h"
 
-// Index Member Functions
+
+// size_t Index::hashfunc(std::string str) const {
+//     size_t hash = FNV_offset;
+//     for (char c : str) {
+//         hash = hash ^ c;
+//         hash = hash * FNV_prime;
+//     }
+//     return hash%map_size;
+// }
+
 size_t Index::hashfunc(std::string str) const {
-    size_t hash = FNV_offset;
+    size_t hash = 0;
     for (char c : str) {
-        hash = hash ^ c;
-        hash = hash * FNV_prime;
+        hash = hash * 101 + c;
     }
     return hash%map_size;
 }
@@ -17,7 +25,7 @@ void Index::rehash() {
     size_t previous_msize = map_size;
     map_size = map_size << 1;
     for (size_t i = 0; i < previous_msize; i++) {
-        if (counter > previous_msize) {
+        if (counter > count) {
             break;
         }
         if (temp[i] != nullptr) {

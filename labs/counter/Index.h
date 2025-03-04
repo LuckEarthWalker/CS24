@@ -7,6 +7,8 @@
 #include <cmath>
 #include <iostream>
 
+#define TINY_MASK(x) (((u_int32_t)1<<(x))-1)
+
 class Index { //using FNV-1a hash function, sourced from https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
 private:
     //FNV hash parameters from wikipedia 
