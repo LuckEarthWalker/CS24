@@ -13,7 +13,7 @@
 size_t Index::hashfunc(std::string str) const {
     size_t hash = 0;
     for (char c : str) {
-        hash = hash << 8 + c;
+        hash = (hash << 8) + c;
     }
     return hash%map_size;
 }
