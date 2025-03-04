@@ -7,7 +7,7 @@ size_t Index::hashfunc(std::string str) const {
         hash = hash ^ c;
         hash = hash * FNV_prime;
     }
-    return hash%map_size;
+    return hash >> (32-bits);
 }
 
 // size_t Index::hashfunc(std::string str) const {
@@ -24,6 +24,7 @@ void Index::rehash() {
     map = new Node*[map_size << 1]();
     size_t previous_msize = map_size;
     map_size = map_size << 1;
+    bits++;
     for (size_t i = 0; i < previous_msize; i++) {
         if (counter > count) {
             break;
@@ -40,6 +41,7 @@ void Index::rehash() {
 Index::Index() {
     map = new Node*[64](); // use 64 to avoid rehash for char count
     map_size = 64;
+    bits = 7;
     count = 0;
 }
 
