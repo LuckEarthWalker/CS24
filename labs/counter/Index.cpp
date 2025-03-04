@@ -13,9 +13,9 @@ size_t Index::hashfunc(std::string str) const {
 void Index::rehash() {
     size_t counter = 0;
     Node** temp = map;
-    map = new Node*[map_size*2]();
+    map = new Node*[map_size << 1]();
     size_t previous_msize = map_size;
-    map_size *= 2;
+    map_size = map_size << 1;
     for (size_t i = 0; i < previous_msize; i++) {
         if (counter > count) {
             break;

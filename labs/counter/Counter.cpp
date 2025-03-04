@@ -4,23 +4,23 @@ size_t Counter::count() const {
     return pairs.count();
 }
 
-int Counter::total() const {
-    Node* temp = pairs.Head();
-    int sum = 0;
-    while (temp != nullptr) {
-        sum += temp->num;
-        temp = temp->next;
-    }
-    return sum;
-}
-
 // int Counter::total() const {
+//     Node* temp = pairs.Head();
 //     int sum = 0;
-//     for (auto itr = this->begin(); itr != this->end(); ++itr) {
-//         sum += itr.value();
+//     while (temp != nullptr) {
+//         sum += temp->num;
+//         temp = temp->next;
 //     }
 //     return sum;
 // }
+
+int Counter::total() const {
+    int sum = 0;
+    for (auto itr = this->begin(); itr != this->end(); ++itr) {
+        sum += itr.value();
+    }
+    return sum;
+}
 
 void Counter::inc(const std::string& key, int by) {
     Node* temp = hashmap.lookup(key);
