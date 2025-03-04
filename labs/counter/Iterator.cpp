@@ -4,7 +4,7 @@ Counter::Iterator::Iterator(Node* head) {
     it = head;
 }
 
-const std::string& Counter::Iterator::key() const {
+std::string_view Counter::Iterator::key() const {
     return it->str;
 }
 

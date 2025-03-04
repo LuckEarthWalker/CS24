@@ -16,7 +16,7 @@ List::~List() {
     size = 0;
 }
 
-Node* List::push_back(const std::string& str_val, int num_val) {
+Node* List::push_back(std::string_view str_val, int num_val) {
     if (size == 0) {
         head = new Node;
         tail = head;
@@ -38,7 +38,7 @@ Node* List::push_back(const std::string& str_val, int num_val) {
     return tail;
 }
 
-// Node* List::find(const std::string& str_val) const {
+// Node* List::find(std::string_view str_val) const {
 //     Node* temp = head;
 //     while (temp != nullptr && temp->str != str_val) {
 //         temp = temp->next;
@@ -46,7 +46,7 @@ Node* List::push_back(const std::string& str_val, int num_val) {
 //     return temp;
 // }
 
-// void List::remove(const std::string& str_val) {
+// void List::remove(std::string_view str_val) {
 //     Node* temp = find(str_val);
 //     if (temp == nullptr) {
 //         return;

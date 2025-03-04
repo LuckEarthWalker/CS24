@@ -19,7 +19,7 @@ public:
   public:
     Iterator(Node* head);
 
-    const std::string& key() const;
+    std::string_view key() const;
     int value() const;
 
     void operator ++ ();
@@ -39,11 +39,11 @@ public:
   size_t count() const;
   int    total() const;
 
-  void inc(const std::string& key, int by = 1);
-  void dec(const std::string& key, int by = 1);
-  void del(const std::string& key);
-  int  get(const std::string& key) const;
-  void set(const std::string& key, int count);
+  void inc(std::string_view key, int by = 1);
+  void dec(std::string_view key, int by = 1);
+  void del(std::string_view key);
+  int  get(std::string_view key) const;
+  void set(std::string_view key, int count);
 
   Iterator begin() const;
   Iterator end() const;

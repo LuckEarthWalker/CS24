@@ -22,7 +22,7 @@ int Counter::total() const {
     return sum;
 }
 
-void Counter::inc(const std::string& key, int by) {
+void Counter::inc(std::string_view key, int by) {
     Node* temp = hashmap.lookup(key);
     if (temp == nullptr) {
         temp = pairs.push_back(key, by);
@@ -32,7 +32,7 @@ void Counter::inc(const std::string& key, int by) {
     temp->num += by;
 }
 
-void Counter::dec(const std::string& key, int by) {
+void Counter::dec(std::string_view key, int by) {
     Node* temp = hashmap.lookup(key);
     if (temp == nullptr) {
         temp = pairs.push_back(key, -1*by);
@@ -42,12 +42,12 @@ void Counter::dec(const std::string& key, int by) {
     temp->num -= by;
 }
 
-void Counter::del(const std::string& key) {
+void Counter::del(std::string_view key) {
     Node* temp = hashmap.del_key(key);
     pairs.remove(temp);
 }
 
-int Counter::get(const std::string& key) const {
+int Counter::get(std::string_view key) const {
     Node* temp = hashmap.lookup(key);
     if (temp == nullptr) {
         return 0;
@@ -55,7 +55,7 @@ int Counter::get(const std::string& key) const {
     return temp->num;
 }
 
-void Counter::set(const std::string& key, int count) {
+void Counter::set(std::string_view key, int count) {
     Node* temp = hashmap.lookup(key);
     if (temp == nullptr) {
         temp = pairs.push_back(key, count);

@@ -1,7 +1,7 @@
 #include "Index.h"
 
 
-size_t Index::hashfunc(std::string str) const {
+size_t Index::hashfunc(std::string_view str) const {
     size_t hash = FNV_offset;
     for (char c : str) {
         hash = hash ^ c;
@@ -47,7 +47,7 @@ Index::~Index() {
     delete []map;
 }
 
-void Index::add_key(const std::string& key, Node* pair) {
+void Index::add_key(std::string_view key, Node* pair) {
     size_t index = hashfunc(key);
     size_t offset = 1;
     size_t buffer = index;
@@ -60,14 +60,14 @@ void Index::add_key(const std::string& key, Node* pair) {
     count++;
 }
 
-void Index::new_key(const std::string& key, Node* pair) {
+void Index::new_key(std::string_view key, Node* pair) {
     if ((float)count/map_size > .6) {
         rehash();
     }
     add_key(key, pair);
 }
 
-Node* Index::lookup(const std::string& key) const {
+Node* Index::lookup(std::string_view key) const {
     size_t index = hashfunc(key);
     size_t offset = 1;
     size_t buffer = index;
@@ -82,7 +82,7 @@ Node* Index::lookup(const std::string& key) const {
     return nullptr;
 }
 
-Node* Index::del_key(const std::string& key) {
+Node* Index::del_key(std::string_view key) {
     size_t index = hashfunc(key);
     size_t offset = 1;
     size_t buffer = index;
