@@ -1,22 +1,22 @@
 #include "Index.h"
 
 
-size_t Index::hashfunc(std::string str) const {
-    size_t hash = FNV_offset;
-    for (char c : str) {
-        hash = hash ^ c;
-        hash = hash * FNV_prime;
-    }
-    return hash%map_size;
-}
-
 // size_t Index::hashfunc(std::string str) const {
-//     size_t hash = 0;
+//     size_t hash = FNV_offset;
 //     for (char c : str) {
-//         hash = hash * 101 + c;
+//         hash = hash ^ c;
+//         hash = hash * FNV_prime;
 //     }
 //     return hash%map_size;
 // }
+
+size_t Index::hashfunc(std::string str) const {
+    size_t hash = 0;
+    for (char c : str) {
+        hash = hash << 8 + c;
+    }
+    return hash%map_size;
+}
 
 void Index::rehash() {
     size_t counter = 0;
@@ -53,9 +53,7 @@ void Index::add_key(const std::string& key, Node* pair) {
     size_t buffer = index;
 
     while (map[buffer] != nullptr) {
-        // buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
-        buffer = (size_t)(index + offset)%map_size;
-
+        buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
         offset++;
     }
     map[buffer] = pair;
@@ -63,7 +61,7 @@ void Index::add_key(const std::string& key, Node* pair) {
 }
 
 void Index::new_key(const std::string& key, Node* pair) {
-    if ((float)count/map_size > .5) {
+    if ((float)count/map_size > .6) {
         rehash();
     }
     add_key(key, pair);
@@ -74,9 +72,7 @@ Node* Index::lookup(const std::string& key) const {
     size_t offset = 1;
     size_t buffer = index;
     while (map[buffer] != nullptr && map[buffer]->str != key) {
-        // buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
-        buffer = (size_t)(index + offset)%map_size;
-
+        buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
         offset++;
     }
 
@@ -91,9 +87,7 @@ Node* Index::del_key(const std::string& key) {
     size_t offset = 1;
     size_t buffer = index;
     while (map[buffer] != nullptr && map[buffer]->str != key) {
-        // buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
-        buffer = (size_t)(index + offset)%map_size;
-
+        buffer = (size_t)(index + (offset + offset*offset)/2)%map_size;
         offset++;
     }
 
