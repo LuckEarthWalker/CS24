@@ -57,6 +57,7 @@ int main(int argc, char** argv) {
     bool inc = true;
     std::string str = "?";
     Counter counter;
+
     while(stream.get(c)) {
       if(isspace(c)) {
         inc = !inc;
@@ -84,6 +85,7 @@ int main(int argc, char** argv) {
         totals.del(str);
       }
     }
+
     print_results(argv[i], counter);
   }
 

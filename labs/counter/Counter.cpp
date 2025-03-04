@@ -44,10 +44,8 @@ void Counter::dec(const std::string& key, int by) {
 }
 
 void Counter::del(const std::string& key) {
-    Node* temp = hashmap.lookup(key);
-    hashmap.del_key(key);
+    Node* temp = hashmap.del_key(key);
     pairs.remove(temp);
-
 }
 
 int Counter::get(const std::string& key) const {
