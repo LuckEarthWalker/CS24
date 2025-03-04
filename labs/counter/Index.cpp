@@ -38,8 +38,8 @@ void Index::rehash() {
 }
 
 Index::Index() {
-    map = new Node*[128](); // use 64 to avoid rehash for char count
-    map_size = 128;
+    map = new Node*[256](); // use 64 to avoid rehash for char count
+    map_size = 256;
     count = 0;
 }
 
