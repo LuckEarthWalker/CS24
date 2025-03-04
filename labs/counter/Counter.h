@@ -2,9 +2,11 @@
 #define COUNTER_H
 
 #include "List.h"
+#include "Index.h"
 
 #include <cstddef>
 #include <string>
+#include <iostream>
 
 // This is the Counter class you need to implement.
 // It includes the Counter::Iterator as a nested class.
@@ -27,13 +29,12 @@ public:
 
 private:
   List pairs;
+  Index hashmap;
 
 private:
   // Helper Functions
 
 public:
-  Counter();
-  ~Counter();
 
   size_t count() const;
   int    total() const;

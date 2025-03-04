@@ -20,9 +20,10 @@ public:
     List();
     ~List();
 
-    void push_back(const std::string& str_val, int num_val);
-    void remove(const std::string& str_val);
-    Node* find(const std::string& str_val) const;
+    Node* push_back(const std::string& str_val, int num_val);
+    // void remove(const std::string& str_val);
+    void remove(Node* pair);
+    // Node* find(const std::string& str_val) const;
     Node* Head() const;
     size_t count() const;
 
