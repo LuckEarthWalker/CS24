@@ -11,13 +11,18 @@ size_t Index::hashfunc(std::string str) const {
 }
 
 void Index::rehash() {
+    size_t counter = 0;
     Node** temp = map;
     map = new Node*[map_size*2]();
     size_t previous_msize = map_size;
     map_size *= 2;
     for (size_t i = 0; i < previous_msize; i++) {
+        if (counter > previous_msize) {
+            break;
+        }
         if (temp[i] != nullptr) {
             add_key(temp[i]->str, temp[i]);
+            counter++;
         }
     }
     delete []temp;

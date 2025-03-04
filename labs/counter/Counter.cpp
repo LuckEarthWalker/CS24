@@ -15,7 +15,6 @@ size_t Counter::count() const {
 // }
 
 int Counter::total() const {
-    Node* temp = pairs.Head();
     int sum = 0;
     for (auto itr = this->begin(); itr != this->end(); ++itr) {
         sum += itr.value();
