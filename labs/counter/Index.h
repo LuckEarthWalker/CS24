@@ -16,7 +16,6 @@ private:
     const size_t FNV_offset = 2166136261;
 
     size_t map_size;
-    size_t bits;
     size_t count;
 
     Node** map;
