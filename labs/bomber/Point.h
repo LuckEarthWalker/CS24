@@ -26,4 +26,6 @@ struct Point {
 std::ostream& operator << (std::ostream& stream, const Point& point);
 std::istream& operator >> (std::istream& stream, Point& point);
 
+bool operator == (Point pt1, Point pt2);
+
 #endif
