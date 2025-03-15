@@ -20,6 +20,8 @@ struct Point {
     this->lat = other.lat;
     this->lng = other.lng;
   }
+
+  Point& operator=(const Point& other) = default;
 };
 
 // Operators for easier (and consistent) input and output:

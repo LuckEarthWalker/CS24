@@ -1,5 +1,9 @@
 #include "Map.h"
 
+bool operator < (pstate state1, pstate state2) {
+    return state1.dist < state2.dist;
+}
+
 Map::Map(std::istream& stream) {
     //recreate map
     std::string curr_row;
@@ -39,6 +43,91 @@ void Map::print() {
         std::cout << "\n";
     }
 }
+double sq_dist(Point pt1, Point pt2) {
+    return (pow(pt2.lat-pt1.lat, 2) + pow(pt2.lng-pt1.lng, 2));
+}
+
+// std::string Map::route(Point src, Point dst) {
+//     // edgecases
+//     if (src.lat < 0 || src.lat > (int)map.size() || src.lng < 0 || src.lng > (int)map[0].size() || walls.count(src) == 1 || waters.count(src) == 1) {
+//         PointError error(src);
+//         throw error;
+//     }
+//     if (dst.lat < 0 || dst.lat > (int)map.size() || dst.lng < 0 || dst.lng > (int)map[0].size()) {
+//         PointError error(dst);
+//         throw error;
+//     }
+//     if (waters.find(dst) != waters.end()) {
+//         RouteError error(src,dst);
+//         throw error;
+//     }
+
+//     // tuple<lat, long, bomb_count> storing ministate
+//     std::unordered_set<std::tuple<int,int,int>> visted;
+//     std::queue<state> explorer;
+
+
+//     explorer.push({src, 0, ""});
+//     while (!explorer.empty()) {
+//         state curr = explorer.front();
+//         explorer.pop();
+
+//         if (curr.pt == dst) {
+//             return curr.path;
+//         }
+
+//         if (visted.count({curr.pt.lat, curr.pt.lng, curr.bomb_count}) > 0) {
+//             continue;
+//         }
+//         visted.insert({curr.pt.lat, curr.pt.lng, curr.bomb_count});
+
+//         for (char move : MOVESET) {
+//             // move pt and check if valid
+//             Point new_pt(curr.pt);
+//             if (move == 'n') {
+//                 if (new_pt.lat == 0) {
+//                     continue;
+//                 } else {
+//                     new_pt.lat--;
+//                 }
+//             } else if (move == 'e') {
+//                 if (new_pt.lng == map_width-1) {
+//                     continue;
+//                 } else {
+//                     new_pt.lng++;
+//                 }
+//             } else if (move == 's') {
+//                 if (new_pt.lat == map_height-1) {
+//                     continue;
+//                 } else {
+//                     new_pt.lat++;
+//                 }
+//             } else {
+//                 if (new_pt.lng == 0) {
+//                     continue;
+//                 } else {
+//                     new_pt.lng--;
+//                 }
+//             }
+
+//             // move
+//             char terrain = map[new_pt.lat][new_pt.lng];
+
+//             if (terrain == '.') {
+//                 explorer.push({new_pt, curr.bomb_count, curr.path+move});
+//             } else if (terrain == '*') {
+//                 explorer.push({new_pt, curr.bomb_count+1, curr.path+move});
+//             } else if (terrain == '#') {
+//                 if (curr.bomb_count > 0) {
+//                     explorer.push({new_pt, curr.bomb_count-1, curr.path+move});
+//                 }
+//             } else {
+//                 continue;
+//             }
+//         }
+//     }
+//     return "No route from (" + std::to_string(src.lat) + ", " + std::to_string(src.lng) + ") to (" + std::to_string(dst.lat) + ", " + std::to_string(dst.lng) + ").\n";
+// }
 
 std::string Map::route(Point src, Point dst) {
     // edgecases
@@ -57,15 +146,14 @@ std::string Map::route(Point src, Point dst) {
 
     // tuple<lat, long, bomb_count> storing ministate
     std::unordered_set<std::tuple<int,int,int>> visted;
-    std::queue<state> explorer;
+    std::priority_queue<pstate> explorer;
 
-
-    explorer.push({src, 0, ""});
+    explorer.push({src, 0, "", -1*sq_dist(src, dst)});
     while (!explorer.empty()) {
-        state curr = explorer.front();
+        pstate curr = explorer.top();
         explorer.pop();
 
-        if (curr.pt == dst) {
+        if (curr.pt.lat == dst.lat && curr.pt.lng == dst.lng) {
             return curr.path;
         }
 
@@ -107,12 +195,12 @@ std::string Map::route(Point src, Point dst) {
             char terrain = map[new_pt.lat][new_pt.lng];
 
             if (terrain == '.') {
-                explorer.push({new_pt, curr.bomb_count, curr.path+move});
+                explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst)});
             } else if (terrain == '*') {
-                explorer.push({new_pt, curr.bomb_count+1, curr.path+move});
+                explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)-10)});
             } else if (terrain == '#') {
                 if (curr.bomb_count > 0) {
-                    explorer.push({new_pt, curr.bomb_count-1, curr.path+move});
+                    explorer.push({new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst)});
                 }
             } else {
                 continue;

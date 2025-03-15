@@ -8,6 +8,7 @@
 #include <unordered_set>
 #include <tuple>
 #include <queue>
+#include <cmath>
 
 #include "Point.h"
 #include "Errors.h"
@@ -18,6 +19,13 @@ struct state {
     Point pt;
     int bomb_count;
     std::string path;
+};
+
+struct pstate {
+    Point pt;
+    int bomb_count;
+    std::string path;
+    double dist;
 };
 
 // custom hashs to use unordered_set. template gotten from https://en.cppreference.com/w/cpp/utility/hash
@@ -59,5 +67,7 @@ public:
     void print();
     std::string route(Point src, Point dst);
 };
+
+bool operator < (pstate state1, pstate state2);
 
 #endif
