@@ -7,32 +7,42 @@ bool operator < (pstate state1, pstate state2) {
 Map::Map(std::istream& stream) {
     //recreate map
     std::string curr_row;
+    map_height = 0;
     while (std::getline(stream, curr_row)) {
+        map_height++;
         std::vector<char> row;
+        map_width = 0;
         for (char curr_space : curr_row) {
             if (isspace(curr_space)) {
                 continue;
             } else {
+                map_width++;
                 row.push_back(curr_space);
+            }
+            if (curr_space == '#') {
+                Point temp(map_height-1,map_width-1);
+                walls.insert(temp);
+            }
+            if (curr_space == '~') {
+                Point temp(map_height-1,map_width-1);
+                waters.insert(temp);
             }
         }
         map.push_back(row);
     }
-    map_height = map.size();
-    map_width = map[0].size();
 
-    for (int i = 0; i < map_height; i++) {
-        for (int j = 0; j < map_width; j++) {
-            if (map[i][j] == '#') {
-                Point temp(i,j);
-                walls.insert(temp);
-            }
-            if (map[i][j] == '~') {
-                Point temp(i,j);
-                waters.insert(temp);
-            }
-        }
-    }
+    // for (int i = 0; i < map_height; i++) {
+    //     for (int j = 0; j < map_width; j++) {
+    //         if (map[i][j] == '#') {
+    //             Point temp(i,j);
+    //             walls.insert(temp);
+    //         }
+    //         if (map[i][j] == '~') {
+    //             Point temp(i,j);
+    //             waters.insert(temp);
+    //         }
+    //     }
+    // }
 }
 
 void Map::print() {
@@ -47,7 +57,7 @@ double sq_dist(Point pt1, Point pt2) {
     return (pow(pt2.lat-pt1.lat, 2) + pow(pt2.lng-pt1.lng, 2));
 }
 
-// std::string Map::route(Point src, Point dst) {
+// std::string Map::route(Point src, Point dst) { // naive first breadth traversal
 //     // edgecases
 //     if (src.lat < 0 || src.lat > (int)map.size() || src.lng < 0 || src.lng > (int)map[0].size() || walls.count(src) == 1 || waters.count(src) == 1) {
 //         PointError error(src);
@@ -129,7 +139,7 @@ double sq_dist(Point pt1, Point pt2) {
 //     return "No route from (" + std::to_string(src.lat) + ", " + std::to_string(src.lng) + ") to (" + std::to_string(dst.lat) + ", " + std::to_string(dst.lng) + ").\n";
 // }
 
-std::string Map::route(Point src, Point dst) {
+std::string Map::route(Point src, Point dst) { // A*
     // edgecases
     if (src.lat < 0 || src.lat > (int)map.size() || src.lng < 0 || src.lng > (int)map[0].size() || walls.count(src) == 1 || waters.count(src) == 1) {
         PointError error(src);
