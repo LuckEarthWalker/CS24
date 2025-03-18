@@ -150,7 +150,7 @@ std::string Map::route(Point src, Point dst) { // A*
         throw error;
     }
     if (waters.find(dst) != waters.end()) {
-        RouteError error(src,dst);
+        PointError error(dst);
         throw error;
     }
 
@@ -217,5 +217,6 @@ std::string Map::route(Point src, Point dst) { // A*
             }
         }
     }
-    return "No route from (" + std::to_string(src.lat) + ", " + std::to_string(src.lng) + ") to (" + std::to_string(dst.lat) + ", " + std::to_string(dst.lng) + ").\n";
+    RouteError error(src, dst);
+    throw error;
 }
