@@ -207,7 +207,7 @@ std::string Map::route(Point src, Point dst) { // A*
             if (terrain == '.') {
                 explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst)});
             } else if (terrain == '*') {
-                explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)-10)});
+                explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*90)});
             } else if (terrain == '#') {
                 if (curr.bomb_count > 0) {
                     explorer.push({new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst)});
