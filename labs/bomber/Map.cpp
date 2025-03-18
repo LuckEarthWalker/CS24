@@ -149,7 +149,7 @@ std::string Map::route(Point src, Point dst) { // A*
         PointError error(dst);
         throw error;
     }
-    if (waters.find(dst) != waters.end()) {
+    if (waters.count(dst) > 0) {
         PointError error(dst);
         throw error;
     }
@@ -208,6 +208,7 @@ std::string Map::route(Point src, Point dst) { // A*
                 explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst)});
             } else if (terrain == '*') {
                 explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*90)});
+                map[new_pt.lat][new_pt.lng] = '.';
             } else if (terrain == '#') {
                 if (curr.bomb_count > 0) {
                     explorer.push({new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst)});
