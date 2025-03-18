@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     if(std::cin.fail()) {
       break;
     }
-    auto start = std::chrono::high_resolution_clock::now();
+    // auto start = std::chrono::high_resolution_clock::now();
 
     try {
       std::cout << map.route(src, dst) << '\n';
@@ -59,9 +59,9 @@ int main(int argc, char** argv) {
     catch(const PointError& e) {
       std::cout << "Invalid point: " << e.point << '\n';
     }
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop-start);
-    std::cout << "execution time: " << duration.count() << "ms\n";
+    // auto stop = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop-start);
+    // std::cout << "execution time: " << duration.count() << "ms\n";
   }
 
   
