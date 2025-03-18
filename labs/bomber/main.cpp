@@ -29,6 +29,7 @@ int main(int argc, char** argv) {
   }
   Map map(stream);
 
+  map.print();
   while(true) {
     Point src;
     Point dst;
