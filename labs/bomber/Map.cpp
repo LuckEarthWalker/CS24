@@ -117,7 +117,7 @@ std::string Map::route(Point src, Point dst) { // A*
                 if (curr.changed.count(new_pt) > 0) {
                     explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
                 } else {
-                    pstate temp = {new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*.90),curr.changed};
+                    pstate temp = {new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*.80),curr.changed};
                     temp.changed.insert(new_pt);
                     explorer.push(temp);
                 }
