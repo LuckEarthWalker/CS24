@@ -71,8 +71,6 @@ std::string Map::route(Point src, Point dst) { // A*
         pstate curr = explorer.top();
         explorer.pop();
 
-        std::cout << curr.path << "\n";
-
         if (curr.pt.lat == dst.lat && curr.pt.lng == dst.lng) {
             return curr.path;
         }
