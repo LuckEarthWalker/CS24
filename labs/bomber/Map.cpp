@@ -36,7 +36,7 @@ Map::Map(std::istream& stream) {
 }
 
 double sq_dist(Point pt1, Point pt2) {
-    return (pow(pt2.lat-pt1.lat, 2) + pow(pt2.lng-pt1.lng, 2));
+    return (abs(pt2.lat-pt1.lat) + abs(pt2.lng-pt1.lng));
 }
 
 std::string Map::route(Point src, Point dst) { // A*
