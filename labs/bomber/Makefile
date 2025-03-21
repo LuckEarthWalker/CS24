@@ -17,4 +17,4 @@ map.o: Map.cpp Map.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.o bomber
+	rm -f *.o bomber gmon.out
