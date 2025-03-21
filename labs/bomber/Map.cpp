@@ -59,11 +59,11 @@ std::string Map::route(Point src, Point dst) { // A*
     std::priority_queue<pstate> explorer;
 
     if (map[src.lat][src.lng] == '*') {
-        pstate temp = {src, 1, "", -1*sq_dist(src, dst),{},{}};
-        temp.bombs.insert(src);
+        pstate temp = {src, 1, "", -1*sq_dist(src, dst),{}};
+        temp.changed.insert(src);
         explorer.push(temp);
     } else {
-        explorer.push({src, 0, "", -1*sq_dist(src, dst),{},{}});
+        explorer.push({src, 0, "", -1*sq_dist(src, dst),{}});
     }
 
     while (!explorer.empty()) {
@@ -112,21 +112,21 @@ std::string Map::route(Point src, Point dst) { // A*
             char terrain = map[new_pt.lat][new_pt.lng];
 
             if (terrain == '.') {
-                explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.bombs,curr.walls});
+                explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
             } else if (terrain == '*') {
-                if (curr.bombs.count(new_pt) > 0) {
-                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.bombs,curr.walls});
+                if (curr.changed.count(new_pt) > 0) {
+                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
                 } else {
-                    pstate temp = {new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*.80),curr.bombs,curr.walls};
-                    temp.bombs.insert(new_pt);
+                    pstate temp = {new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*.90),curr.changed};
+                    temp.changed.insert(new_pt);
                     explorer.push(temp);
                 }
             } else if (terrain == '#') {
-                if (curr.bombs.count(new_pt) > 0) {
-                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.bombs,curr.walls});
+                if (curr.changed.count(new_pt) > 0) {
+                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
                 } else if (curr.bomb_count > 0) {
-                    pstate temp = {new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst), curr.bombs,curr.walls};
-                    temp.walls.insert(new_pt);
+                    pstate temp = {new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst), curr.changed};
+                    temp.changed.insert(new_pt);
                     explorer.push(temp);
                 }
             } else {
