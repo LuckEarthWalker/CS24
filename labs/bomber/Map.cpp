@@ -157,6 +157,7 @@ std::string Map::route(Point src, Point dst) { // A*
     // tuple<lat, long, bomb_count> storing ministate
     std::unordered_set<std::tuple<int,int,int>> visted;
     std::priority_queue<pstate> explorer;
+    std::queue<Point> recover;
 
     explorer.push({src, 0, "", -1*sq_dist(src, dst)});
     while (!explorer.empty()) {
@@ -164,6 +165,12 @@ std::string Map::route(Point src, Point dst) { // A*
         explorer.pop();
 
         if (curr.pt.lat == dst.lat && curr.pt.lng == dst.lng) {
+            //recover bombs for next query
+            while(!recover.empty()) {
+                Point temp = recover.front();
+                recover.pop();
+                map[temp.lat][temp.lng] = '*';
+            }
             return curr.path;
         }
 
@@ -209,6 +216,7 @@ std::string Map::route(Point src, Point dst) { // A*
             } else if (terrain == '*') {
                 explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*90)});
                 map[new_pt.lat][new_pt.lng] = '.';
+                recover.push(new_pt);
             } else if (terrain == '#') {
                 if (curr.bomb_count > 0) {
                     explorer.push({new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst)});
