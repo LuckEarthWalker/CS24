@@ -15,19 +15,6 @@
 
 #define MOVESET {'n','e','s','w'}
 
-struct state {
-    Point pt;
-    int bomb_count;
-    std::string path;
-};
-
-struct pstate {
-    Point pt;
-    int bomb_count;
-    std::string path;
-    double dist;
-};
-
 // custom hashs to use unordered_set. template gotten from https://en.cppreference.com/w/cpp/utility/hash
 template<>
 struct std::hash<Point>
@@ -50,6 +37,14 @@ struct std::hash<std::tuple<int,int,int>>
         std::size_t hash3 = std::hash<int>{}(std::get<2>(tup));
         return ((hash1 ^ (hash2 << 1)) >> 1) ^ (hash3 << 1);
     }
+};
+
+struct pstate {
+    Point pt;
+    int bomb_count;
+    std::string path;
+    double dist;
+    std::unordered_set<Point> changed;
 };
 
 class Map {

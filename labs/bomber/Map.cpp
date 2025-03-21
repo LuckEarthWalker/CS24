@@ -3,6 +3,9 @@
 bool operator < (pstate state1, pstate state2) {
     return state1.dist < state2.dist;
 }
+// bool operator == (pstate state1, pstate state2) {
+//     return state1.bomb_count == state2.bomb_count && state1.changed == state2.changed && state1.dist == state2.dist && state1.pt == state2.pt;
+// }
 
 Map::Map(std::istream& stream) {
     //recreate map
@@ -30,114 +33,11 @@ Map::Map(std::istream& stream) {
         }
         map.push_back(row);
     }
-
-    // for (int i = 0; i < map_height; i++) {
-    //     for (int j = 0; j < map_width; j++) {
-    //         if (map[i][j] == '#') {
-    //             Point temp(i,j);
-    //             walls.insert(temp);
-    //         }
-    //         if (map[i][j] == '~') {
-    //             Point temp(i,j);
-    //             waters.insert(temp);
-    //         }
-    //     }
-    // }
 }
 
-void Map::print() {
-    for (auto row : map) {
-        for (auto space : row) {
-            std::cout << space;
-        }
-        std::cout << "\n";
-    }
-}
 double sq_dist(Point pt1, Point pt2) {
     return (pow(pt2.lat-pt1.lat, 2) + pow(pt2.lng-pt1.lng, 2));
 }
-
-// std::string Map::route(Point src, Point dst) { // naive first breadth traversal
-//     // edgecases
-//     if (src.lat < 0 || src.lat > (int)map.size() || src.lng < 0 || src.lng > (int)map[0].size() || walls.count(src) == 1 || waters.count(src) == 1) {
-//         PointError error(src);
-//         throw error;
-//     }
-//     if (dst.lat < 0 || dst.lat > (int)map.size() || dst.lng < 0 || dst.lng > (int)map[0].size()) {
-//         PointError error(dst);
-//         throw error;
-//     }
-//     if (waters.find(dst) != waters.end()) {
-//         RouteError error(src,dst);
-//         throw error;
-//     }
-
-//     // tuple<lat, long, bomb_count> storing ministate
-//     std::unordered_set<std::tuple<int,int,int>> visted;
-//     std::queue<state> explorer;
-
-
-//     explorer.push({src, 0, ""});
-//     while (!explorer.empty()) {
-//         state curr = explorer.front();
-//         explorer.pop();
-
-//         if (curr.pt == dst) {
-//             return curr.path;
-//         }
-
-//         if (visted.count({curr.pt.lat, curr.pt.lng, curr.bomb_count}) > 0) {
-//             continue;
-//         }
-//         visted.insert({curr.pt.lat, curr.pt.lng, curr.bomb_count});
-
-//         for (char move : MOVESET) {
-//             // move pt and check if valid
-//             Point new_pt(curr.pt);
-//             if (move == 'n') {
-//                 if (new_pt.lat == 0) {
-//                     continue;
-//                 } else {
-//                     new_pt.lat--;
-//                 }
-//             } else if (move == 'e') {
-//                 if (new_pt.lng == map_width-1) {
-//                     continue;
-//                 } else {
-//                     new_pt.lng++;
-//                 }
-//             } else if (move == 's') {
-//                 if (new_pt.lat == map_height-1) {
-//                     continue;
-//                 } else {
-//                     new_pt.lat++;
-//                 }
-//             } else {
-//                 if (new_pt.lng == 0) {
-//                     continue;
-//                 } else {
-//                     new_pt.lng--;
-//                 }
-//             }
-
-//             // move
-//             char terrain = map[new_pt.lat][new_pt.lng];
-
-//             if (terrain == '.') {
-//                 explorer.push({new_pt, curr.bomb_count, curr.path+move});
-//             } else if (terrain == '*') {
-//                 explorer.push({new_pt, curr.bomb_count+1, curr.path+move});
-//             } else if (terrain == '#') {
-//                 if (curr.bomb_count > 0) {
-//                     explorer.push({new_pt, curr.bomb_count-1, curr.path+move});
-//                 }
-//             } else {
-//                 continue;
-//             }
-//         }
-//     }
-//     return "No route from (" + std::to_string(src.lat) + ", " + std::to_string(src.lng) + ") to (" + std::to_string(dst.lat) + ", " + std::to_string(dst.lng) + ").\n";
-// }
 
 std::string Map::route(Point src, Point dst) { // A*
     // edgecases
@@ -150,7 +50,7 @@ std::string Map::route(Point src, Point dst) { // A*
         throw error;
     }
     if (waters.count(dst) > 0) {
-        PointError error(dst);
+        RouteError error(src, dst);
         throw error;
     }
 
@@ -158,15 +58,12 @@ std::string Map::route(Point src, Point dst) { // A*
     std::unordered_set<std::tuple<int,int,int>> visted;
     std::priority_queue<pstate> explorer;
 
-    std::queue<Point> recover_bombs;
-    std::queue<Point> recover_walls;
-
     if (map[src.lat][src.lng] == '*') {
-        explorer.push({src, 1, "", -1*sq_dist(src, dst)});
-        map[src.lat][src.lng] = '.';
-        recover_bombs.push(src);
+        pstate temp = {src, 1, "", -1*sq_dist(src, dst),{}};
+        temp.changed.insert(src);
+        explorer.push(temp);
     } else {
-        explorer.push({src, 0, "", -1*sq_dist(src, dst)});
+        explorer.push({src, 0, "", -1*sq_dist(src, dst),{}});
     }
 
     while (!explorer.empty()) {
@@ -174,24 +71,13 @@ std::string Map::route(Point src, Point dst) { // A*
         explorer.pop();
 
         if (curr.pt.lat == dst.lat && curr.pt.lng == dst.lng) {
-            //recover bombs and walls for next query
-            while(!recover_bombs.empty()) {
-                Point temp = recover_bombs.front();
-                recover_bombs.pop();
-                map[temp.lat][temp.lng] = '*';
-            }
-            while(!recover_walls.empty()) {
-                Point temp = recover_walls.front();
-                recover_walls.pop();
-                map[temp.lat][temp.lng] = '#';
-            }
             return curr.path;
         }
 
-        if (visted.count({curr.pt.lat, curr.pt.lng, curr.bomb_count}) > 0) {
+        if (visted.count({curr.pt.lat,curr.pt.lng,curr.bomb_count}) > 0) {
             continue;
         }
-        visted.insert({curr.pt.lat, curr.pt.lng, curr.bomb_count});
+        visted.insert({curr.pt.lat,curr.pt.lng,curr.bomb_count});
 
         for (char move : MOVESET) {
             // move pt and check if valid
@@ -226,32 +112,27 @@ std::string Map::route(Point src, Point dst) { // A*
             char terrain = map[new_pt.lat][new_pt.lng];
 
             if (terrain == '.') {
-                explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst)});
+                explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
             } else if (terrain == '*') {
-                explorer.push({new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*90)});
-                map[new_pt.lat][new_pt.lng] = '.';
-                recover_bombs.push(new_pt);
+                if (curr.changed.count(new_pt) > 0) {
+                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
+                } else {
+                    pstate temp = {new_pt, curr.bomb_count+1, curr.path+move, -1*(sq_dist(new_pt,dst)*.90),curr.changed};
+                    temp.changed.insert(new_pt);
+                    explorer.push(temp);
+                }
             } else if (terrain == '#') {
-                if (curr.bomb_count > 0) {
-                    explorer.push({new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst)});
-                    map[new_pt.lat][new_pt.lng] = '.';
-                    recover_walls.push(new_pt);
+                if (curr.changed.count(new_pt) > 0) {
+                    explorer.push({new_pt, curr.bomb_count, curr.path+move, -1*sq_dist(new_pt,dst),curr.changed});
+                } else if (curr.bomb_count > 0) {
+                    pstate temp = {new_pt, curr.bomb_count-1, curr.path+move, -1*sq_dist(new_pt,dst), curr.changed};
+                    temp.changed.insert(new_pt);
+                    explorer.push(temp);
                 }
             } else {
                 continue;
             }
         }
-    }
-    // run recovery before throwing no route
-    while(!recover_bombs.empty()) {
-        Point temp = recover_bombs.front();
-        recover_bombs.pop();
-        map[temp.lat][temp.lng] = '*';
-    }
-    while(!recover_walls.empty()) {
-        Point temp = recover_walls.front();
-        recover_walls.pop();
-        map[temp.lat][temp.lng] = '#';
     }
     RouteError error(src, dst);
     throw error;
