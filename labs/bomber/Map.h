@@ -44,7 +44,8 @@ struct pstate {
     int bomb_count;
     std::string path;
     double dist;
-    std::unordered_set<Point> changed;
+    std::unordered_set<Point> bombs;
+    std::unordered_set<Point> walls;
 };
 
 class Map {
